@@ -2,25 +2,40 @@ package faceservice.service;
 
 
 
+import faceservice.RestTemplateConfig;
 import net.sf.json.JSONObject;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.*;
 import java.util.Map;
+import java.util.Random;
 
 
 @Service
-public class MyService {
+public class HttpService {
+    private RestTemplate restTemplate;
+
 
     private static  String BaseUrl="http://192.168.2.141:8080/";
+
+    public HttpService(RestTemplateConfig restTemplate) {
+        this.restTemplate = restTemplate.tokenRetrieveRestTemplate();
+    }
+
     public void  sendForm(String url,Map<String, Object> map) {
         RestTemplate restTemplate=new RestTemplate();
 
         // 通过 HttpHeaders 设置Form方式提交
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
         HttpEntity<Map<String, Object>> httpEntity = new HttpEntity<>(map, headers);
         ResponseEntity<String> responseEntity = null;
 
@@ -33,20 +48,26 @@ public class MyService {
         }
         getReturn(body);
     }
-    public void sendJson(String url,Map<String,String> map){
-        RestTemplate restTemplate=new RestTemplate();
+    public ResponseEntity sendPic(MultipartFile file)throws IOException {
+        //RestTemplate restTemplate=new RestTemplate();
+        File image=new File(ResourceUtils.getURL("classpath:Face/face.jpg").getPath());
+        file.transferTo(image);
+        FileSystemResource face=new FileSystemResource(image);
+        MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
+        param.add("image",face);
+        HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<>(param);
+        ResponseEntity<String> responseEntity = restTemplate.exchange(BaseUrl+"api/face/v1/add", HttpMethod.POST, httpEntity, String.class);
+        return responseEntity;
+    }
+    public ResponseEntity sendJson(String url,Map<String,String> map){
+        //RestTemplate restTemplate=new RestTemplate();
         HttpHeaders headers = new HttpHeaders();		//定义请求参数类型，这里用json所以是MediaType.APPLICATION_JSON
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<Map<String,String>> httpEntity = new HttpEntity<>(map, headers);
         ResponseEntity<String> responseEntity = null;
-        String body=new String();
-        try {
-            responseEntity = restTemplate.postForEntity(BaseUrl+url,httpEntity,String.class);
-            body = responseEntity.getBody();
-        } catch (HttpClientErrorException e) {
-            body=e.getResponseBodyAsString();
-        }
-        getReturn(body);
+        responseEntity = restTemplate.exchange(BaseUrl+url, HttpMethod.POST,httpEntity,String.class);
+        return responseEntity;
+
     }
     public void get(String url,Map<String,Object> map){
         RestTemplate restTemplate=new RestTemplate();
@@ -58,6 +79,8 @@ public class MyService {
     public static void getReturn(String message){
         int level=0;
         JSONObject json=JSONObject.fromObject(message);
+        JSONObject data=(JSONObject)JSONObject.fromObject(json).get("data");
+        System.out.println(data.get("version"));
         String str=json.toString();
         StringBuffer jsonForMatStr = new StringBuffer();
         for(int index=0;index<str.length();index++)//将字符串中的字符逐个按行输出
@@ -98,4 +121,21 @@ public class MyService {
             levelStr.append("\t");        }
             return levelStr.toString();
     }
+    public byte[] getPic()throws IOException{
+        FileSystemResource resource = new FileSystemResource(ResourceUtils.getFile("classpath:face1.jpg"));
+        byte[] pic=new byte[4096];
+        InputStream inputStream = new FileInputStream(ResourceUtils.getFile("classpath:face1.jpg"));
+        inputStream.read(pic);
+        inputStream.close();
+        return pic;
+    }
+    private static String getBoundary() {
+        StringBuilder sb = new StringBuilder();
+        Random random = new Random();
+        for(int i = 0; i < 32; ++i) {
+            sb.append("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-".charAt(random.nextInt("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_".length())));
+        }
+        return sb.toString();
+    }
+
 }

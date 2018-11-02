@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="faceservice.mapper.keyMapper" >
+    <resultMap id="BaseResultMap" type="faceservice.model.keyModel" >
+        <id column="key_id" property="key_id" jdbcType="VARCHAR" />
+        <result column="face_token" property="face_token" jdbcType="VARCHAR" />
+        <result column="group" property="id_group" jdbcType="VARCHAR" />
+        <result column="face" property="face" jdbcType="BINARY" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        key_id,face_token,id_group,face
+    </sql>
+
+    <select id="getAll" resultMap="BaseResultMap"  >
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM key_Table
+    </select>
+
+    <select id="getOne" parameterType="java.lang.String" resultMap="BaseResultMap" >
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM key_Table
+        WHERE key_id = #{key_id}
+    </select>
+
+    <insert id="insert" parameterType="faceservice.model.keyModel" >
+        INSERT INTO
+        key_Table
+        (key_id,face_token,face)
+        VALUES
+        (#{key_id}, #{face_token}, #{face})
+    </insert>
+
+    <update id="update" parameterType="faceservice.model.keyModel" >
+        UPDATE
+        key_Table
+        SET
+        <if test="face_token != null">face_token = #{face_token},</if>
+        <if test="face != null">face = #{face}</if>
+
+        WHERE
+        key_id = #{key_id}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.String">
+        DELETE FROM
+        key_Table
+        WHERE
+        key_id =#{key_id}
+    </delete>
+
+</mapper>
