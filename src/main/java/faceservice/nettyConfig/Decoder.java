@@ -1,4 +1,4 @@
-package faceservice;
+package faceservice.nettyConfig;
 
 import faceservice.model.Msg;
 import io.netty.buffer.ByteBuf;

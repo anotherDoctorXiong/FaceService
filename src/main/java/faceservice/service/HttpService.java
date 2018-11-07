@@ -2,7 +2,7 @@ package faceservice.service;
 
 
 
-import faceservice.RestTemplateConfig;
+import faceservice.restTemplateConfig.RestTemplateConfig;
 import net.sf.json.JSONObject;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.*;

@@ -1,4 +1,4 @@
-package faceservice;
+package faceservice.nettyConfig;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
@@ -7,17 +7,23 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.concurrent.CountDownLatch;
+
 @Configuration
 public class NettyClient {
     private EventLoopGroup group;
     private Bootstrap b;
     private ChannelFuture cf ;
+    private CountDownLatch lathc;
+    private HandlerInit handlerInit;
     public NettyClient(){
+        lathc=new CountDownLatch(0);
+        handlerInit=new HandlerInit(lathc);
         group = new NioEventLoopGroup();
         b = new Bootstrap();
         b.group(group)
                 .channel(NioSocketChannel.class)
-                .handler(new HandlerInit());
+                .handler(handlerInit);
 
     }
     public void connect(){
@@ -37,6 +43,9 @@ public class NettyClient {
             this.connect();
         }
         return this.cf;
+    }
+    public HandlerInit getHandlerInit(){
+        return handlerInit;
     }
 
 }

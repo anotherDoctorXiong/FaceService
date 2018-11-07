@@ -1,4 +1,4 @@
-package faceservice;
+package faceservice.nettyConfig;
 
 import java.util.Arrays;
 

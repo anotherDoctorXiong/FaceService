@@ -1,11 +1,10 @@
-package faceservice;
+package faceservice.nettyConfig;
 
 import faceservice.model.Msg;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
-import org.springframework.core.codec.ByteBufferEncoder;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

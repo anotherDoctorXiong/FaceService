@@ -52,6 +52,13 @@ public class Msg {
     public String toString() {
         return "Msg [msgtLength=" + this.msgLength + ", cmd=" + this.cmd + ", content=" + new String(this.content) + "]";
     }
+    public String getMessage(){
+        String str=new String(this.content);
+        if(str.contains("0")){
+            return "0";
+        }else
+            return str;
+    }
 
 }
 

@@ -3,26 +3,26 @@ package faceservice.model;
 import java.io.Serializable;
 
 public class keyModel implements Serializable {
-    private String key_id;
+    private String id;
     private String face_token;
     private String group;
     private byte[] face;
     public keyModel() {
     }
 
-    public keyModel(String key_id, String face_token,String group, byte[] face) {
-        this.key_id = key_id;
+    public keyModel(String id, String face_token,String group, byte[] face) {
+        this.id = id;
         this.face_token = face_token;
         this.group=group;
         this.face = face;
     }
 
-    public String getKey_id() {
-        return key_id;
+    public String getId() {
+        return id;
     }
 
-    public void setKey_id(String key_id) {
-        this.key_id = key_id;
+    public void setId(String key_id) {
+        this.id = key_id;
     }
 
     public String getFace_token() {
@@ -41,7 +41,7 @@ public class keyModel implements Serializable {
         this.face = face;
     }
     public String toString(){
-        return  "key_id="+key_id+"\nface_token"+face_token+"\ngroup"+group;
+        return  "key_id="+id+"\nface_token"+face_token+"\ngroup"+group;
     }
 
     public String getGroup() {
