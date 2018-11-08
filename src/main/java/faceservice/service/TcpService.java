@@ -13,12 +13,11 @@ import java.util.concurrent.CountDownLatch;
 
 @Service
 public class TcpService {
-    private ChannelFuture cf;
-    private HandlerInit handlerInit;
+    private NettyClient nettyClient;
+
 
     public TcpService(NettyClient n) {
-        this.cf = n.getChannelFuture();
-        this.handlerInit = n.getHandlerInit();
+        this.nettyClient=n;
     }
 
 
@@ -42,6 +41,8 @@ public class TcpService {
         cf.channel().writeAndFlush(msg2Send);
     }*/
     public String register(String id, String group, MultipartFile file) throws Exception {
+        ChannelFuture cf=nettyClient.getChannelFuture();
+        HandlerInit handlerInit=nettyClient.getHandlerInit();
         short cmd = 501;
         File image = new File(ResourceUtils.getURL("classpath:Face/face.jpg").getPath());
         file.transferTo(image);
@@ -61,6 +62,8 @@ public class TcpService {
     }
 
     public String delete(String id) throws InterruptedException {
+        ChannelFuture cf=nettyClient.getChannelFuture();
+        HandlerInit handlerInit=nettyClient.getHandlerInit();
         short cmd = 509;
         String content = id;
         byte[] contentBytes = content.getBytes();
@@ -104,7 +107,8 @@ public class TcpService {
 	}*/
     public void Test() {
 
-        //ChannelFuture cf = c.getChannelFuture();
+        ChannelFuture cf=nettyClient.getChannelFuture();
+        HandlerInit handlerInit=nettyClient.getHandlerInit();
         String content = "150103040581";
         short cmd = 503;
         byte[] contentBytes = content.getBytes();
@@ -118,7 +122,12 @@ public class TcpService {
     }
 
     public String query(String group,String id) throws InterruptedException{
-        String content =group+id;
+        ChannelFuture cf=nettyClient.getChannelFuture();
+        HandlerInit handlerInit=nettyClient.getHandlerInit();
+        group=group.substring(2,group.length());
+
+        String content =id;
+        System.out.println(content);
         short cmd = 503;
         byte[] contentBytes = content.getBytes();
         int length = 3 + content.length();
@@ -138,7 +147,6 @@ public class TcpService {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         byte[] buffer = new byte[1024];
         boolean var4 = false;
-
         int len;
         while ((len = fin.read(buffer)) != -1) {
             out.write(buffer, 0, len);

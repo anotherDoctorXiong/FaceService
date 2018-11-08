@@ -54,7 +54,7 @@ public class Msg {
     }
     public String getMessage(){
         String str=new String(this.content);
-        if(str.contains("0")){
+        if(str.contains("ok")){
             return "0";
         }else
             return str;

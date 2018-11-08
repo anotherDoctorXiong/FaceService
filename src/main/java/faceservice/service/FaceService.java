@@ -1,5 +1,6 @@
 package faceservice.service;
 
+
 import faceservice.mapper.keyMapper;
 import faceservice.model.keyModel;
 import net.sf.json.JSONObject;
@@ -89,7 +90,7 @@ public class FaceService {
         if(model==null){
             return new ResponseEntity("id was not found",HttpStatus.BAD_REQUEST);
         }else{
-            if(model.getFace_token()!=null){
+            if(model.getFace_token()!=null&&model.getFace_token()!=""){
                 Map<String,String> map=new HashMap();
                 map.put("face_token",model.getFace_token());
                 ResponseEntity res=httpService.sendJson("/api/face/v1/delete",map);
@@ -114,7 +115,7 @@ public class FaceService {
         if(model==null){
             return new ResponseEntity("this id is not exit",HttpStatus.OK);
         }else{
-            if(model.getFace_token()!=null){
+            if(model.getFace_token()!=null&&model.getFace_token()!=""){
                 Map<String,String> map=new HashMap();
                 map.put("face_token",model.getFace_token());
                 ResponseEntity res=httpService.sendJson("/api/face/v1/query",map);
@@ -131,6 +132,38 @@ public class FaceService {
             }
         }
 
+    }
+    public ResponseEntity<String> updateFace(String id,MultipartFile image)throws Exception{
+        keyModel model=new keyModel();
+        model=mapper.getOne(id);
+
+        model.setFace(image.getBytes());
+        if(model==null){
+            return new ResponseEntity("this id is not exit",HttpStatus.OK);
+        }else{
+            model.setFace(image.getBytes());
+            if(model.getFace_token()!=""&&model.getFace_token()!=null){
+                Map<String,String> map=new HashMap();
+                map.put("face_token",model.getFace_token());
+                ResponseEntity res=httpService.sendJson("/api/face/v1/delete",map);
+                if(checkRespon(res)){
+                    mapper.delete(id);
+                    ResponseEntity res1=addFace("1",id,model.getGroup(),image);
+                    if(checkRespon(res1)){
+                        return new ResponseEntity("update success id="+id,HttpStatus.OK);
+                    }
+                    return new ResponseEntity(getMessage(res1),HttpStatus.INTERNAL_SERVER_ERROR);
+                }else
+                    return new ResponseEntity(getMessage(res),HttpStatus.INTERNAL_SERVER_ERROR);
+            }else{
+                String str=tcpService.register(id,model.getGroup(),image);
+                if (str == "0") {
+                    mapper.update(model);
+                    return new ResponseEntity("success update id="+id,HttpStatus.OK);
+                }else
+                    return new ResponseEntity(str,HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
     }
     private static String getToken(ResponseEntity response){
         String message=response.getBody().toString();

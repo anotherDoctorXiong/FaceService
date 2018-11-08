@@ -25,6 +25,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
     }
 
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        lathc.countDown();
         ctx.close();
     }
     public void resetLatch(CountDownLatch lathc) {
@@ -32,7 +33,10 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
     }
 
     public String getResult() {
-        return message.getMessage();
+        if(message==null){
+            return "TCPSERVER HAS ERROR";
+        }else
+            return message.getMessage();
     }
 
 }

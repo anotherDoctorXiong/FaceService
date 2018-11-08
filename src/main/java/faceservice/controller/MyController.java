@@ -22,8 +22,11 @@ public class MyController {
 
     @RequestMapping(value = "/TestGet", method = RequestMethod.GET)
     @ResponseBody
-    public void getUrl(@RequestParam Map<String, Object> map) {
-        httpService.get("api/version/v1", map);
+    public ResponseEntity<Map<String,Object>> getUrl(@RequestParam Map<String, Object> map) {
+        map.put("code","0");
+        map.put("message","success");
+        map.put("timecost","1145");
+        return new ResponseEntity(map,HttpStatus.OK);
     }
 
     /**
@@ -78,6 +81,28 @@ public class MyController {
         } else
             return new ResponseEntity("param not allowed null", HttpStatus.BAD_REQUEST);
     }
+    /**
+      * @name:          updateFace
+      * @discraption:   通过人脸id更新图片
+      * @param:         人脸id,人脸图片
+      * @return:        成功返回200,失败返回失败信息
+      **/
+    @RequestMapping(value = "/Face/Update", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<String> updateFace(@RequestParam Map<String, String> map, MultipartFile image) throws Exception {
+        String id = map.get("id");
+        if (id != null && id != ""&&!image.isEmpty()) {
+            return faceService.updateFace(id,image);
+        } else
+            return new ResponseEntity("param not allowed null", HttpStatus.BAD_REQUEST);
+    }
+    /**
+      * @name:
+      * @discraption:
+      * @param:
+      * @return:
+      **/
+
 
     /*
    * post json使用实例
