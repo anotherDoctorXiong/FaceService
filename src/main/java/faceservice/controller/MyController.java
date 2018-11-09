@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -19,6 +21,8 @@ public class MyController {
     private FaceService faceService;
     @Autowired
     private keyMapper keyMapper;
+
+
 
     @RequestMapping(value = "/TestGet", method = RequestMethod.GET)
     @ResponseBody
@@ -42,7 +46,7 @@ public class MyController {
         String type = map.get("type");
         String group = map.get("group");
         if (id != null && id != "" && type != null && type != "" && group != null && group != "") {
-            if (image.isEmpty()) {
+            if (image==null) {
                 return new ResponseEntity("no image was found", HttpStatus.BAD_REQUEST);
             }
             return faceService.addFace(type, id, group, image);
@@ -97,11 +101,44 @@ public class MyController {
             return new ResponseEntity("param not allowed null", HttpStatus.BAD_REQUEST);
     }
     /**
-      * @name:
-      * @discraption:
-      * @param:
-      * @return:
+      * @name:          queryGroup
+      * @discraption:   通过group查询该分组的所有人脸id
+      * @param:         group<String></>
+      * @return:        200返回List(id)
       **/
+    @RequestMapping(value = "/Group/Query", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity queryGroup(@RequestBody Map<String, String> map){
+        System.out.println(map.get("group"));
+        String group=map.get("group");
+        if (group != null && group != "") {
+            List<String> list=faceService.queryGroup(group);
+            if(list==null){
+                return new ResponseEntity("can not find any id in this group", HttpStatus.BAD_REQUEST);
+            }else
+                return new ResponseEntity(list, HttpStatus.OK);
+        } else
+            return new ResponseEntity("param not allowed null", HttpStatus.BAD_REQUEST);
+
+    }
+    /**
+     * @name:          deleteGroup
+     * @discraption:   通过group删除该分组的所有人脸id
+     * @param:         group<String></>
+     * @return:        200删除成功
+     **/
+    @RequestMapping(value = "/Group/Delete", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<String> deleteGroup(@RequestBody Map<String, String> map){
+        String group=map.get("group");
+        if (group != null && group != "") {
+            if(faceService.deleteGroup(group)==0){
+                return new ResponseEntity("delete success group="+group, HttpStatus.OK);
+            }else
+                return new ResponseEntity("can not find any id in this group", HttpStatus.OK);
+        } else
+            return new ResponseEntity("param not allowed null", HttpStatus.BAD_REQUEST);
+    }
 
 
     /*

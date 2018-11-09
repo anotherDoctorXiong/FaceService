@@ -11,6 +11,10 @@ public interface keyMapper {
 
     keyModel getOne(String id);
 
+    List<String> getGroup(String group);
+
+    void deleteGroup(String group);
+
     void insert(keyModel info);
 
     void update(keyModel info);

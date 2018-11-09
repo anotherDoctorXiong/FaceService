@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -22,6 +23,7 @@ public class FaceService {
     private HttpService httpService;
     @Autowired
     private TcpService tcpService;
+
     /**
       * @name:
       * @discraption:      添加注册人脸 face++注册人脸需要与分组进行绑定操作 注册成功后将相关信息存储到数据库
@@ -29,6 +31,7 @@ public class FaceService {
       * @return:           成功返回200 失败返回失败信息
       **/
     public ResponseEntity<String> addFace(String type,String id, String group,MultipartFile image)throws Exception{
+
         keyModel model=new keyModel();
         if(mapper.getOne(id)!=null){
             return new ResponseEntity("id was already used", HttpStatus.OK);
@@ -136,8 +139,6 @@ public class FaceService {
     public ResponseEntity<String> updateFace(String id,MultipartFile image)throws Exception{
         keyModel model=new keyModel();
         model=mapper.getOne(id);
-
-        model.setFace(image.getBytes());
         if(model==null){
             return new ResponseEntity("this id is not exit",HttpStatus.OK);
         }else{
@@ -165,6 +166,24 @@ public class FaceService {
             }
         }
     }
+    public List<String> queryGroup(String group){
+        return mapper.getGroup(group);
+    }
+    public int deleteGroup(String group){
+        List<String> list=queryGroup(group);
+        if(list!=null){
+            list.forEach(p->{
+                try {
+                    deleteFace(p);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+            return 0;
+        }else
+            return 1;
+    }
+
     private static String getToken(ResponseEntity response){
         String message=response.getBody().toString();
         JSONObject json=JSONObject.fromObject(message);

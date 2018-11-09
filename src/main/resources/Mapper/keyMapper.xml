@@ -12,6 +12,7 @@
         id,face_token,group_name,face
     </sql>
 
+
     <select id="getAll" resultMap="BaseResultMap"  >
         SELECT
         <include refid="Base_Column_List" />
@@ -23,6 +24,18 @@
         <include refid="Base_Column_List" />
         FROM table_1
         WHERE id = #{id}
+    </select>
+    <select id="getGroup" parameterType="java.lang.String" resultType="java.lang.String" >
+        SELECT
+        id
+        FROM table_1
+        WHERE group_name = #{group}
+    </select>
+    <select id="deleteGroup" parameterType="java.lang.String"  >
+        DELETE FROM
+        table_1
+        WHERE
+        group =#{group}
     </select>
 
     <insert id="insert" parameterType="faceservice.model.keyModel" >
