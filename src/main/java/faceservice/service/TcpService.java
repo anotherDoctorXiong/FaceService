@@ -125,9 +125,7 @@ public class TcpService {
         ChannelFuture cf=nettyClient.getChannelFuture();
         HandlerInit handlerInit=nettyClient.getHandlerInit();
         group=group.substring(2,group.length());
-
         String content =id;
-        System.out.println(content);
         short cmd = 503;
         byte[] contentBytes = content.getBytes();
         int length = 3 + content.length();

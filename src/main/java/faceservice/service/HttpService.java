@@ -4,6 +4,7 @@ package faceservice.service;
 
 import faceservice.restTemplateConfig.RestTemplateConfig;
 import net.sf.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,10 @@ import java.util.Random;
 public class HttpService {
     private RestTemplate restTemplate;
 
-
-    private static  String BaseUrl="http://192.168.2.141:8080/";
+    @Value("${facepass.url}")
+    private String BaseUrl;
+    @Value("${muyan.url}")
+    private String BaseUrl1;
 
     public HttpService(RestTemplateConfig restTemplate) {
         this.restTemplate = restTemplate.tokenRetrieveRestTemplate();
@@ -67,7 +70,6 @@ public class HttpService {
         ResponseEntity<String> responseEntity = null;
         responseEntity = restTemplate.exchange(BaseUrl+url, HttpMethod.POST,httpEntity,String.class);
         return responseEntity;
-
     }
     public void get(String url,Map<String,Object> map){
         RestTemplate restTemplate=new RestTemplate();
@@ -75,6 +77,15 @@ public class HttpService {
         String body = responseEntity.getBody();
         getReturn(body);
 
+    }
+    public ResponseEntity sendJson2(String url,Map<String,String> map){
+
+        HttpHeaders headers = new HttpHeaders();		//定义请求参数类型，这里用json所以是MediaType.APPLICATION_JSON
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<Map<String,String>> httpEntity = new HttpEntity<>(map, headers);
+        ResponseEntity<String> responseEntity = null;
+        responseEntity = restTemplate.exchange(BaseUrl1+url, HttpMethod.POST,httpEntity,String.class);
+        return responseEntity;
     }
     public static void getReturn(String message){
         int level=0;

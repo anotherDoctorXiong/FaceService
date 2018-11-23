@@ -15,8 +15,7 @@ import java.util.Map;
 
 @Controller
 public class MyController {
-    @Autowired
-    private HttpService httpService;
+
     @Autowired
     private FaceService faceService;
     @Autowired
@@ -47,6 +46,7 @@ public class MyController {
         String group = map.get("group");
         if (id != null && id != "" && type != null && type != "" && group != null && group != "") {
             if (image==null) {
+
                 return new ResponseEntity("no image was found", HttpStatus.BAD_REQUEST);
             }
             return faceService.addFace(type, id, group, image);
