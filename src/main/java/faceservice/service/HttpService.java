@@ -33,24 +33,7 @@ public class HttpService {
         this.restTemplate = restTemplate.tokenRetrieveRestTemplate();
     }
 
-    public void  sendForm(String url,Map<String, Object> map) {
-        RestTemplate restTemplate=new RestTemplate();
 
-        // 通过 HttpHeaders 设置Form方式提交
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-        HttpEntity<Map<String, Object>> httpEntity = new HttpEntity<>(map, headers);
-        ResponseEntity<String> responseEntity = null;
-
-        String body=new String();
-        try {
-            responseEntity = restTemplate.postForEntity(BaseUrl+url,httpEntity,String.class);
-            body = responseEntity.getBody();
-        } catch (HttpClientErrorException e) {
-            body=e.getResponseBodyAsString();
-        }
-        getReturn(body);
-    }
     public ResponseEntity sendPic(MultipartFile file)throws IOException {
         //RestTemplate restTemplate=new RestTemplate();
         File image=new File(ResourceUtils.getURL("classpath:Face/face.jpg").getPath());
@@ -60,6 +43,33 @@ public class HttpService {
         param.add("image",face);
         HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<>(param);
         ResponseEntity<String> responseEntity = restTemplate.exchange(BaseUrl+"api/face/v1/add", HttpMethod.POST, httpEntity, String.class);
+        return responseEntity;
+    }
+    public ResponseEntity sendForm(String url,String faceId,MultipartFile file) throws IOException{
+        File image=new File(ResourceUtils.getURL("classpath:Face/face.jpg").getPath());
+        file.transferTo(image);
+        FileSystemResource face=new FileSystemResource(image);
+        MultiValueMap<String, Object> postParameters = new LinkedMultiValueMap<>();
+        postParameters.add("faceId",faceId);
+        postParameters.add("",face);
+        HttpHeaders headers = new HttpHeaders();		//定义请求参数类型，这里用json所以是MediaType.APPLICATION_JSON
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+        HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<>(postParameters, headers);
+        ResponseEntity<String> responseEntity = null;
+        responseEntity = restTemplate.postForEntity(BaseUrl1+url,httpEntity,String.class);
+        return responseEntity;
+
+    }
+    public ResponseEntity sendUrlencoded(String url,Map<String,Object> map){
+        MultiValueMap<String, Object> postParameters = new LinkedMultiValueMap<>();
+        for (Map.Entry<String,Object> entry : map.entrySet()) {
+            postParameters.add(entry.getKey(),entry.getValue());
+        }
+        HttpHeaders headers = new HttpHeaders();		//定义请求参数类型，这里用json所以是MediaType.APPLICATION_JSON
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<>(postParameters, headers);
+        ResponseEntity<String> responseEntity = null;
+        responseEntity = restTemplate.exchange(BaseUrl1+url, HttpMethod.POST,httpEntity,String.class);
         return responseEntity;
     }
     public ResponseEntity sendJson(String url,Map<String,String> map){
@@ -78,15 +88,7 @@ public class HttpService {
         getReturn(body);
 
     }
-    public ResponseEntity sendJson2(String url,Map<String,String> map){
 
-        HttpHeaders headers = new HttpHeaders();		//定义请求参数类型，这里用json所以是MediaType.APPLICATION_JSON
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<Map<String,String>> httpEntity = new HttpEntity<>(map, headers);
-        ResponseEntity<String> responseEntity = null;
-        responseEntity = restTemplate.exchange(BaseUrl1+url, HttpMethod.POST,httpEntity,String.class);
-        return responseEntity;
-    }
     public static void getReturn(String message){
         int level=0;
         JSONObject json=JSONObject.fromObject(message);

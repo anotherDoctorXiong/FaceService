@@ -32,8 +32,6 @@ public class DemoApplicationTests {
 		map.put("idcard","360122199909091212");
 		map.put("wgId","6");
 
-		System.out.println(httpService.sendJson2("person/add",map));
-
 	}
 
 

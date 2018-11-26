@@ -3,6 +3,7 @@ package faceservice.controller;
 import faceservice.mapper.keyMapper;
 import faceservice.service.FaceService;
 import faceservice.service.HttpService;
+import faceservice.service.ParkingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +22,8 @@ public class MyController {
     private FaceService faceService;
     @Autowired
     private keyMapper keyMapper;
+    @Autowired
+    private ParkingService parkingService;
 
 
 
@@ -139,7 +143,17 @@ public class MyController {
         } else
             return new ResponseEntity("param not allowed null", HttpStatus.BAD_REQUEST);
     }
-
+    @RequestMapping(value = "Parking/Face/Add", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<String> parkingFaceAdd(@RequestParam Map<String, String> map, MultipartFile image)throws IOException{
+        String id=map.get("faceId");
+        String name=map.get("username");
+        if (id != null && id != ""&&name!=null&&name!=""&&image!=null) {
+            map.put("wgId","");
+            return new ResponseEntity(parkingService.parkingFaceAdd(map,image), HttpStatus.OK);
+        } else
+            return new ResponseEntity("param not allowed null", HttpStatus.BAD_REQUEST);
+    }
 
     /*
    * post json使用实例
