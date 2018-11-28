@@ -60,14 +60,14 @@ public class HttpService {
         return responseEntity;
 
     }
-    public ResponseEntity sendUrlencoded(String url,Map<String,Object> map)throws IOException{
-        MultiValueMap<String, Object> postParameters = new LinkedMultiValueMap<>();
-        for (Map.Entry<String,Object> entry : map.entrySet()) {
+    public ResponseEntity sendUrlencoded(String url,Map<String,String> map)throws IOException{
+        MultiValueMap<String, String> postParameters = new LinkedMultiValueMap<>();
+        for (Map.Entry<String,String> entry : map.entrySet()) {
             postParameters.add(entry.getKey(),entry.getValue());
         }
         HttpHeaders headers = new HttpHeaders();		//定义请求参数类型，这里用json所以是MediaType.APPLICATION_JSON
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<>(postParameters, headers);
+        HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<>(postParameters, headers);
         ResponseEntity<String> responseEntity = null;
         responseEntity = restTemplate.exchange(BaseUrl1+url, HttpMethod.POST,httpEntity,String.class);
         return responseEntity;
@@ -81,12 +81,10 @@ public class HttpService {
         responseEntity = restTemplate.exchange(BaseUrl+url, HttpMethod.POST,httpEntity,String.class);
         return responseEntity;
     }
-    public void get(String url,Map<String,Object> map){
+    public ResponseEntity url1Get(String url,Map<String,Object> map){
         RestTemplate restTemplate=new RestTemplate();
-        ResponseEntity<String> responseEntity = restTemplate.getForEntity(BaseUrl+url, String.class,map);
-        String body = responseEntity.getBody();
-        getReturn(body);
-
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity(BaseUrl1+url, String.class,map);
+        return responseEntity;
     }
 
     public static void getReturn(String message){
