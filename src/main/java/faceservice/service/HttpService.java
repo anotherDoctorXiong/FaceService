@@ -60,7 +60,7 @@ public class HttpService {
         return responseEntity;
 
     }
-    public ResponseEntity sendUrlencoded(String url,Map<String,Object> map){
+    public ResponseEntity sendUrlencoded(String url,Map<String,Object> map)throws IOException{
         MultiValueMap<String, Object> postParameters = new LinkedMultiValueMap<>();
         for (Map.Entry<String,Object> entry : map.entrySet()) {
             postParameters.add(entry.getKey(),entry.getValue());
