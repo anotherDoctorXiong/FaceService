@@ -154,6 +154,48 @@ public class MyController {
         } else
             return new ResponseEntity("param not allowed null", HttpStatus.BAD_REQUEST);
     }
+    @RequestMapping(value = "Parking/Face/Delete", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<String> parkingFaceDelete(@RequestParam Map<String, String> map)throws IOException{
+        String id=map.get("faceId");
+
+        if (id != null && id != "") {
+            return new ResponseEntity(parkingService.parkingFaceDelete(id), HttpStatus.OK);
+        } else
+            return new ResponseEntity("param not allowed null", HttpStatus.BAD_REQUEST);
+    }
+    @RequestMapping(value = "Parking/Face/Update", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<String> parkingFaceUpdate(@RequestParam Map<String, String> map, MultipartFile image)throws IOException{
+        String id=map.get("faceId");
+        if (id != null && id != ""&&image!=null) {
+            return new ResponseEntity(parkingService.parkingFaceUpdate(map,image), HttpStatus.OK);
+        } else
+            return new ResponseEntity("param not allowed null", HttpStatus.BAD_REQUEST);
+    }
+    @RequestMapping(value = "Parking/Face/Query", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<String> parkingFaceQuery(@RequestParam Map<String, String> map)throws IOException{
+        String id=map.get("faceId");
+        if (id != null && id != "") {
+            return new ResponseEntity(parkingService.parkingFaceQuery(id), HttpStatus.OK);
+        } else
+            return new ResponseEntity("param not allowed null", HttpStatus.BAD_REQUEST);
+    }
+    @RequestMapping(value = "Parking/GetFace", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<String> parkingFaceGet(@RequestParam Map<String, String> map)throws IOException{
+        String id=map.get("faceId");
+        if (id != null && id != "") {
+            return new ResponseEntity(parkingService.parkingGetFace(id), HttpStatus.OK);
+        } else
+            return new ResponseEntity("param not allowed null", HttpStatus.BAD_REQUEST);
+    }
+    @RequestMapping(value = "Parking/GetMac", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<String> parkingFaceGet()throws IOException{
+        return new ResponseEntity(parkingService.parkingGetMac(), HttpStatus.BAD_REQUEST);
+    }
 
     /*
    * post json使用实例
