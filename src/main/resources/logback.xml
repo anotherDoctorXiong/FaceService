@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- 此xml在spring-boot-1.5.3.RELEASE.jar里 -->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+    <!-- 开启后可以通过jmx动态控制日志级别(springboot Admin的功能) -->
+    <!--<jmxConfigurator/>-->
+    <appender name="API-OUT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 保存日志文件的路径 -->
+        <file>D:/FacePass/log/API.log</file>
+        <!-- 日志格式 -->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%class:%line] - %m%n</pattern>
+        </encoder>
+        <!-- 日志级别过滤器 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!-- 过滤的级别 -->
+            <level>INFO</level>
+            <!-- 匹配时的操作：接收（记录） -->
+            <onMatch>ACCEPT</onMatch>
+            <!-- 不匹配时的操作：拒绝（不记录） -->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <!-- 循环政策：基于时间创建日志文件 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 日志文件名格式 -->
+            <fileNamePattern>API.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 最大保存时间：7天-->
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+    </appender>
+    <appender name="SQL-OUT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--<File>/home/hfw-client/hfw_log/stdout.log</File>-->
+        <File>D:/FacePass/log/SQL.log</File>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%class:%line] - %m%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!-- 过滤的级别 -->
+            <level>DEBUG</level>
+            <!-- 匹配时的操作：接收（记录） -->
+            <onMatch>ACCEPT</onMatch>
+            <!-- 不匹配时的操作：拒绝（不记录） -->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 添加.gz 历史日志会启用压缩 大大缩小日志文件所占空间 -->
+            <!--<fileNamePattern>/home/hfw-client/hfw_log/stdout.log.%d{yyyy-MM-dd}.log</fileNamePattern>-->
+            <fileNamePattern>SQL.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <logger name="faceservice.mapper" level="DEBUG" />
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="API-OUT"/>
+        <appender-ref ref="SQL-OUT"/>
+    </root>
+</configuration>
