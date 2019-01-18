@@ -10,11 +10,13 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+
 @Service
 public class ParkingService {
     @Autowired
     private HttpService httpService;
-    public String parkingFaceAdd(Map<String,String> map,MultipartFile image)throws IOException{
+    public String parkingFaceAdd(Map<String,String> map,MultipartFile image)throws IOException {
         JSONObject json=JSONObject.fromObject(map);
         Map<String,String> map1=new HashMap<>();
 

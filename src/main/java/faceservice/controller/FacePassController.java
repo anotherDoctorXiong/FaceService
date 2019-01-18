@@ -1,30 +1,42 @@
 package faceservice.controller;
 
-import faceservice.mapper.keyMapper;
+import faceservice.mapper.UserMapper;
+import faceservice.model.FacePassAddRequest;
+import faceservice.model.Response;
+import faceservice.service.FacePassService;
 import faceservice.service.FaceService;
-import faceservice.service.HttpService;
 import faceservice.service.ParkingService;
+import faceservice.tools.Constraint.Host;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 @Controller
-public class MyController {
+@RequestMapping(value = "/server/facepass")
+@Slf4j
+public class FacePassController {
 
+    @Autowired
+    private FacePassService service;
     @Autowired
     private FaceService faceService;
     @Autowired
-    private keyMapper keyMapper;
+    private UserMapper UserMapper;
     @Autowired
     private ParkingService parkingService;
-
+    @Autowired
+    private Host host;
 
 
     @RequestMapping(value = "/TestGet", method = RequestMethod.GET)
@@ -33,6 +45,7 @@ public class MyController {
         map.put("code","0");
         map.put("message","success");
         map.put("timecost","1145");
+
         return new ResponseEntity(map,HttpStatus.OK);
     }
 
@@ -42,21 +55,20 @@ public class MyController {
      * @param: type<String>(1是使用facepass)</>id<String>(人脸id),group<String>(分组id),image<MultipartFile>(人脸图片)
      * @return: 添加成功返回200, 失败返回400包含错误信息
      **/
-    @RequestMapping(value = "/Face/Add", method = RequestMethod.POST)
+    @RequestMapping(value = "/face/add", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<String> addFace(@RequestParam Map<String, String> map, MultipartFile image) throws Exception {
-        String id = map.get("id");
-        String type = map.get("type");
-        String group = map.get("group");
-        if (id != null && id != "" && type != null && type != "" && group != null && group != "") {
-            if (image==null) {
-
-                return new ResponseEntity("no image was found", HttpStatus.BAD_REQUEST);
-            }
-            return faceService.addFace(type, id, group, image);
-        } else {
-            return new ResponseEntity("params not allowed null", HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Response> addFace(@Valid FacePassAddRequest addRequest, BindingResult bindingResult) throws Exception {
+        Response res=new Response();
+        //对参数进行校验
+        if(bindingResult.hasErrors()){
+            res.setCode(1);
+            res.setMessage(bindingResult.getFieldError().getDefaultMessage());
+            return new ResponseEntity(res,HttpStatus.BAD_REQUEST);
+        }else{
+            res.setCode(service.addFace(addRequest));
+            return new ResponseEntity(res,HttpStatus.OK);
         }
+
     }
 
     /**
@@ -65,14 +77,12 @@ public class MyController {
      * @param: id<String>(人脸id)
      * @return: 删除成功返回200  失败返回失败信息
      **/
-    @RequestMapping(value = "/Face/Delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/face/delete", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<String> deleteFace(@RequestBody Map<String, String> map) throws InterruptedException {
-        String id = map.get("id");
-        if (id != null && id != "") {
-            return faceService.deleteFace(id);
-        } else
-            return new ResponseEntity("param not allowed null", HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Response> deleteFace(@RequestParam  String id){
+        Response res=new Response();
+        res.setCode(service.deleteFace(id));
+        return new ResponseEntity(res,HttpStatus.OK);
     }
     /**
       * @name:          queryFace
@@ -80,14 +90,16 @@ public class MyController {
       * @param:         人脸id
       * @return:        返回200该人脸已被添加，失败返回错误信息
       **/
-    @RequestMapping(value = "/Face/Query", method = RequestMethod.POST)
+    @RequestMapping(value = "/face/query", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<String> queryFace(@RequestBody Map<String, String> map) throws InterruptedException {
-        String id = map.get("id");
-        if (id != null && id != "") {
-            return faceService.queryFace(id);
-        } else
-            return new ResponseEntity("param not allowed null", HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Response> queryFace(@RequestParam  String id) {
+        Response res=new Response();
+        int a=service.queryFace(id);
+        if(a==0){
+            res.setData(service.getUserData(id));
+        }
+        res.setCode(a);
+        return new ResponseEntity(res,HttpStatus.OK);
     }
     /**
       * @name:          updateFace
@@ -95,14 +107,23 @@ public class MyController {
       * @param:         人脸id,人脸图片
       * @return:        成功返回200,失败返回失败信息
       **/
-    @RequestMapping(value = "/Face/Update", method = RequestMethod.POST)
+    @RequestMapping(value = "/face/update", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<String> updateFace(@RequestParam Map<String, String> map, MultipartFile image) throws Exception {
-        String id = map.get("id");
-        if (id != null && id != ""&&!image.isEmpty()) {
-            return faceService.updateFace(id,image);
-        } else
-            return new ResponseEntity("param not allowed null", HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Response> updateFace(@Valid FacePassAddRequest addRequest, BindingResult bindingResult) throws Exception {
+        Response res=new Response();
+        //对参数进行校验
+        if(bindingResult.hasErrors()){
+            res.setCode(1);
+            res.setMessage(bindingResult.getFieldError().getDefaultMessage());
+            return new ResponseEntity(res,HttpStatus.BAD_REQUEST);
+        }else{
+            int a=service.deleteFace(addRequest.getId());
+            if(a==0||a==1503){
+                res.setCode(service.addFace(addRequest));
+            }
+            return new ResponseEntity(res,HttpStatus.OK);
+        }
+
     }
     /**
       * @name:          queryGroup
@@ -110,19 +131,16 @@ public class MyController {
       * @param:         group<String></>
       * @return:        200返回List(id)
       **/
-    @RequestMapping(value = "/Group/Query", method = RequestMethod.POST)
+    @RequestMapping(value = "/group/query", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity queryGroup(@RequestBody Map<String, String> map){
-        System.out.println(map.get("group"));
-        String group=map.get("group");
-        if (group != null && group != "") {
-            List<String> list=faceService.queryGroup(group);
-            if(list==null){
-                return new ResponseEntity("can not find any id in this group", HttpStatus.BAD_REQUEST);
-            }else
-                return new ResponseEntity(list, HttpStatus.OK);
-        } else
-            return new ResponseEntity("param not allowed null", HttpStatus.BAD_REQUEST);
+    public ResponseEntity queryGroup(@RequestParam  String group){
+        Response res=new Response();
+        int a=service.queryGroup(group);
+        if(a==0){
+            res.setData(service.getGroupData(group));
+        }
+        res.setCode(a);
+        return new ResponseEntity(res,HttpStatus.OK);
 
     }
     /**
@@ -131,17 +149,12 @@ public class MyController {
      * @param:         group<String></>
      * @return:        200删除成功
      **/
-    @RequestMapping(value = "/Group/Delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/group/delete", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<String> deleteGroup(@RequestBody Map<String, String> map){
-        String group=map.get("group");
-        if (group != null && group != "") {
-            if(faceService.deleteGroup(group)==0){
-                return new ResponseEntity("delete success group="+group, HttpStatus.OK);
-            }else
-                return new ResponseEntity("can not find any id in this group", HttpStatus.OK);
-        } else
-            return new ResponseEntity("param not allowed null", HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Response> deleteGroup(@RequestParam  String group){
+        Response res=new Response();
+        res.setCode(service.deleteGroup(group));
+        return new ResponseEntity(res,HttpStatus.OK);
     }
     @RequestMapping(value = "Parking/Face/Add", method = RequestMethod.POST)
     @ResponseBody
@@ -156,9 +169,8 @@ public class MyController {
     }
     @RequestMapping(value = "Parking/Face/Delete", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<String> parkingFaceDelete(@RequestParam Map<String, String> map)throws IOException{
+    public ResponseEntity<String> parkingFaceDelete(@RequestParam Map<String, String> map)throws IOException{ 
         String id=map.get("faceId");
-
         if (id != null && id != "") {
             return new ResponseEntity(parkingService.parkingFaceDelete(id), HttpStatus.OK);
         } else
@@ -203,7 +215,7 @@ public class MyController {
     @RequestMapping(value = "/Test", method = RequestMethod.GET)
     @ResponseBody
     public void Test(@RequestParam Map<String, String> map) {
-        System.out.println(keyMapper.getAll().size());
-        System.out.println(keyMapper.getOne("sdisfasf==").toString());
+        System.out.println(UserMapper.getAll().size());
+        System.out.println(UserMapper.getOne("sdisfasf==").toString());
     }
 }

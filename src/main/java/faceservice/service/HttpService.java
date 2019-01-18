@@ -34,11 +34,8 @@ public class HttpService {
     }
 
 
-    public ResponseEntity sendPic(MultipartFile file)throws IOException {
-        //RestTemplate restTemplate=new RestTemplate();
-        File image=new File(ResourceUtils.getURL("classpath:Face/face.jpg").getPath());
-        file.transferTo(image);
-        FileSystemResource face=new FileSystemResource(image);
+    public ResponseEntity sendPic(File file)throws IOException {
+        FileSystemResource face=new FileSystemResource(file);
         MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
         param.add("image",face);
         HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<>(param);
@@ -65,7 +62,7 @@ public class HttpService {
         for (Map.Entry<String,String> entry : map.entrySet()) {
             postParameters.add(entry.getKey(),entry.getValue());
         }
-        HttpHeaders headers = new HttpHeaders();		//定义请求参数类型，这里用json所以是MediaType.APPLICATION_JSON
+        HttpHeaders headers = new HttpHeaders();		//定义请求参数类型
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<>(postParameters, headers);
         ResponseEntity<String> responseEntity = null;

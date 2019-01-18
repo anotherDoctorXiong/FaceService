@@ -1,67 +1,68 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="faceservice.mapper.keyMapper" >
-    <resultMap id="BaseResultMap" type="faceservice.model.keyModel" >
+<mapper namespace="faceservice.mapper.UserMapper" >
+    <resultMap id="BaseResultMap" type="faceservice.model.User" >
         <id column="id" property="id" jdbcType="VARCHAR" />
-        <result column="face_token" property="face_token" jdbcType="VARCHAR" />
-        <result column="group_name" property="group" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
         <result column="face" property="face" jdbcType="BINARY" />
     </resultMap>
 
     <sql id="Base_Column_List" >
-        id,face_token,group_name,face
+        id,name,face
     </sql>
 
 
     <select id="getAll" resultMap="BaseResultMap"  >
         SELECT
         <include refid="Base_Column_List" />
-        FROM table_1
+        FROM user_table
     </select>
 
     <select id="getOne" parameterType="java.lang.String" resultMap="BaseResultMap" >
         SELECT
         <include refid="Base_Column_List" />
-        FROM table_1
+        FROM user_table
         WHERE id = #{id}
     </select>
     <select id="getGroup" parameterType="java.lang.String" resultType="java.lang.String" >
         SELECT
         id
-        FROM table_1
+        FROM user_table
         WHERE group_name = #{group}
     </select>
-    <select id="deleteGroup" parameterType="java.lang.String"  >
-        DELETE FROM
-        table_1
-        WHERE
-        group =#{group}
-    </select>
 
-    <insert id="insert" parameterType="faceservice.model.keyModel" >
+    <insert id="insert" parameterType="faceservice.model.User" >
         INSERT INTO
-        table_1
-        (id,group_name,face_token,face)
+        user_table
+        (id,name,face)
         VALUES
-        (#{id},#{group},#{face_token}, #{face})
+        (#{id},#{name}, #{face})
     </insert>
 
-    <update id="update" parameterType="faceservice.model.keyModel" >
+    <update id="update" parameterType="faceservice.model.User" >
         UPDATE
-        table_1
+        user_table
         SET
-        <if test="face_token != null">face_token = #{face_token},</if>
+        <if test="name != null">name = #{name},</if>
         <if test="face != null">face = #{face}</if>
-
         WHERE
         id = #{id}
     </update>
 
     <delete id="delete" parameterType="java.lang.String">
         DELETE FROM
-        table_1
+        user_table
         WHERE
         id =#{id}
+    </delete>
+    <delete id="deleteGroup" >
+        DELETE FROM
+        user_table
+        WHERE
+        id IN
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </delete>
 
 </mapper>
