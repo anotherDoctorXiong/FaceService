@@ -60,22 +60,22 @@ public class FacePassAddRequest implements Serializable{
 
     public void setImage(MultipartFile file) {
         if(file!=null){
-            File file1 = new File("D:/FaceImage");
+            File file1 = new File("D:/FaceImage/FacePass");
             if (!file1.exists()){
                 file1.mkdir();
             }
-            File image = new File("D:/FaceImage/"+file.getOriginalFilename());
+            File image = new File("D:/FaceImage/FacePass"+file.getOriginalFilename());
             try {
                 file.transferTo(image);
                 if(isPic(image)){
                     this.image = ImageConvert.getVlidImage(image);
-                }else{
-                    this.image=image;
+                }else {
+                    image.delete();
+                    this.image = image;
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
     }
 }
