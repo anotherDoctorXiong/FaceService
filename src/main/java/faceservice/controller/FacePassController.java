@@ -38,15 +38,6 @@ public class FacePassController {
     private Host host;
 
 
-    @RequestMapping(value = "/TestGet", method = RequestMethod.GET)
-    @ResponseBody
-    public ResponseEntity<Map<String,Object>> getUrl(@RequestParam Map<String, Object> map) {
-        map.put("code","0");
-        map.put("message","success");
-        map.put("timecost","1145");
-
-        return new ResponseEntity(map,HttpStatus.OK);
-    }
 
     /**
      * @name: addFace
@@ -141,76 +132,5 @@ public class FacePassController {
         res.setCode(a);
         return new ResponseEntity(res,HttpStatus.OK);
 
-    }
-    /**
-     * @name:          deleteGroup
-     * @discraption:   通过group删除该分组的所有人脸id
-     * @param:         group<String></>
-     * @return:        200删除成功
-     **/
-    @RequestMapping(value = "/group/delete", method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseEntity<Response> deleteGroup(@RequestParam  String group){
-        Response res=new Response();
-        res.setCode(service.deleteGroup(group));
-        return new ResponseEntity(res,HttpStatus.OK);
-    }
-    @RequestMapping(value = "Parking/Face/Add", method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseEntity<String> parkingFaceAdd(@RequestParam Map<String, String> map, MultipartFile image)throws IOException{
-        String id=map.get("faceId");
-        String name=map.get("username");
-        if (id != null && id != ""&&name!=null&&name!=""&&image!=null) {
-            map.put("wgId","");
-            return new ResponseEntity(parkingService.parkingFaceAdd(map,image), HttpStatus.OK);
-        } else
-            return new ResponseEntity("param not allowed null", HttpStatus.BAD_REQUEST);
-    }
-    @RequestMapping(value = "Parking/Face/Delete", method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseEntity<String> parkingFaceDelete(@RequestParam Map<String, String> map)throws IOException{ 
-        String id=map.get("faceId");
-        if (id != null && id != "") {
-            return new ResponseEntity(parkingService.parkingFaceDelete(id), HttpStatus.OK);
-        } else
-            return new ResponseEntity("param not allowed null", HttpStatus.BAD_REQUEST);
-    }
-    @RequestMapping(value = "Parking/Face/Update", method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseEntity<String> parkingFaceUpdate(@RequestParam Map<String, String> map, MultipartFile image)throws IOException{
-        String id=map.get("faceId");
-        if (id != null && id != ""&&image!=null) {
-            return new ResponseEntity(parkingService.parkingFaceUpdate(map,image), HttpStatus.OK);
-        } else
-            return new ResponseEntity("param not allowed null", HttpStatus.BAD_REQUEST);
-    }
-    @RequestMapping(value = "Parking/Face/Query", method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseEntity<String> parkingFaceQuery(@RequestParam Map<String, String> map)throws IOException{
-        String id=map.get("faceId");
-        if (id != null && id != "") {
-            return new ResponseEntity(parkingService.parkingFaceQuery(id), HttpStatus.OK);
-        } else
-            return new ResponseEntity("param not allowed null", HttpStatus.BAD_REQUEST);
-    }
-    @RequestMapping(value = "Parking/GetFace", method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseEntity<String> parkingFaceGet(@RequestParam Map<String, String> map)throws IOException{
-        String id=map.get("faceId");
-        if (id != null && id != "") {
-            return new ResponseEntity(parkingService.parkingGetFace(id), HttpStatus.OK);
-        } else
-            return new ResponseEntity("param not allowed null", HttpStatus.BAD_REQUEST);
-    }
-
-
-    /*
-   * post json使用实例
-   * */
-    @RequestMapping(value = "/Test", method = RequestMethod.GET)
-    @ResponseBody
-    public void Test(@RequestParam Map<String, String> map) {
-        System.out.println(UserMapper.getAll().size());
-        System.out.println(UserMapper.getOne("sdisfasf==").toString());
     }
 }

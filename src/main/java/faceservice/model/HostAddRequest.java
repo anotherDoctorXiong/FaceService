@@ -46,19 +46,21 @@ public class HostAddRequest {
     }
 
     public void setImage(MultipartFile file) {
-        File file1 = new File("D:/FaceImage");
-        if (!file1.exists()){
-            file1.mkdir();
-        }
-        File image = new File("D:/FaceImage/"+file.getOriginalFilename());
-        try {
-            file.transferTo(image);
-            if(isPic(image)){
-                this.image = ImageConvert.getVlidImage(image);
-            }else
-                this.image=image;
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(file!=null){
+            File file1 = new File("D:/FaceImage");
+            if (!file1.exists()){
+                file1.mkdir();
+            }
+            File image = new File("D:/FaceImage/"+file.getOriginalFilename());
+            try {
+                file.transferTo(image);
+                if(isPic(image)){
+                    this.image = ImageConvert.getVlidImage(image);
+                }else
+                    this.image=image;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
