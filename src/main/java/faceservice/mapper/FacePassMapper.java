@@ -13,6 +13,8 @@ public interface FacePassMapper {
 
     String getFace_token(String id);
 
+    String getId(String face_token);
+
     void deleteGroup(String group);
 
     void insert(FacePass info);

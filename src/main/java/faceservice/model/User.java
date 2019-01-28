@@ -14,12 +14,22 @@ public class User implements Serializable {
         this.name=facePassAddRequest.getName();
         this.face=getBytes(facePassAddRequest.getImage());
     }
+    public  User(HostAddRequest addRequest){
+        this.id=addRequest.getId();
+        this.name=addRequest.getName();
+        this.face=getBytes(addRequest.getImage());
+    }
 
     public User(String id, String name,  byte[] face) {
         this.id = id;
         this.name = name;
         this.face = face;
     }
+    public User(String id,byte[] face) {
+        this.id = id;
+        this.face = face;
+    }
+
 
     public String getId() {
         return id;
@@ -44,11 +54,19 @@ public class User implements Serializable {
     public void setFace(byte[] face) {
         this.face = face;
     }
-    public Map<String,Object> getUserMap(String group){
+    public Map<String,Object> getFacePassUserMap(String group){
         Map<String,Object> map=new HashMap();
         map.put("id",this.id);
         map.put("name",this.name);
         map.put("group",group);
+        map.put("face",this.face);
+        return map;
+    }
+    public Map<String,Object> getHuaXiaUserMap(String ip){
+        Map<String,Object> map=new HashMap();
+        map.put("id",this.id);
+        map.put("name",this.name);
+        map.put("ip",ip);
         map.put("face",this.face);
         return map;
     }

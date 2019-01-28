@@ -1,29 +1,26 @@
 package faceservice.model;
 
-
+import faceservice.tools.Constraint.ValidHost;
 import faceservice.tools.Constraint.ValidImage;
 import faceservice.tools.Imagehandle.ImageConvert;
 import org.springframework.web.multipart.MultipartFile;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.io.File;
-import java.io.IOException;
-import java.io.Serializable;
+import java.io.*;
 
 import static faceservice.tools.Imagehandle.ImageTools.isPic;
 
-public class FacePassAddRequest implements Serializable{
-
+public class HostAddRequest {
     @NotEmpty(message = "id is not allowed to be empty or null")
     private String id;
 
     @Pattern(regexp ="[\\u4e00-\\u9fa5]+",message = "name is only allowed chinese")
     @NotEmpty(message = "name is not allowed to be empty or null")
     private String name;
-    @NotNull
-    @Pattern(regexp = "^groupname__[0-9]{4}",message = "invalid groupname")
-    private String group;
+    @ValidHost(message = "invalid ip")
+    private String ip;
     @NotNull(message = "image is not allowed to be null")
     @ValidImage(message = "image is only allowed jpg/jpeg/png")
     private File image;
@@ -44,16 +41,6 @@ public class FacePassAddRequest implements Serializable{
         this.name = name;
     }
 
-    public String getGroup() {
-        return group;
-    }
-
-    public void setGroup(String group) {
-        this.group = group;
-    }
-
-
-
     public File getImage() {
         return image;
     }
@@ -68,11 +55,38 @@ public class FacePassAddRequest implements Serializable{
             file.transferTo(image);
             if(isPic(image)){
                 this.image = ImageConvert.getVlidImage(image);
-            }else{
+            }else
                 this.image=image;
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+    public byte[] getBytes(){
+        byte[] buffer = null;
+        try {
+            FileInputStream fis = new FileInputStream(this.image);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream(1000);
+            byte[] b = new byte[1000];
+            int n;
+            while ((n = fis.read(b)) != -1) {
+                bos.write(b, 0, n);
+            }
+            fis.close();
+            bos.close();
+            buffer = bos.toByteArray();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return buffer;
     }
 }

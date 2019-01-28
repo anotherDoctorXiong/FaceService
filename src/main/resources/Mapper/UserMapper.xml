@@ -43,6 +43,14 @@
         UPDATE
         user_table
         SET
+        <if test="face != null">face = #{face}</if>
+        WHERE
+        id = #{id}
+    </update>
+    <update id="updateFace" parameterType="java.lang.String" >
+        UPDATE
+        user_table
+        SET
         <if test="name != null">name = #{name},</if>
         <if test="face != null">face = #{face}</if>
         WHERE

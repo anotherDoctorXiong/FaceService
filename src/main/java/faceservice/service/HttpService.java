@@ -3,6 +3,7 @@ package faceservice.service;
 
 
 import faceservice.restTemplateConfig.RestTemplateConfig;
+import lombok.extern.slf4j.Slf4j;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
@@ -19,7 +20,7 @@ import java.io.*;
 import java.util.Map;
 import java.util.Random;
 
-
+@Slf4j
 @Service
 public class HttpService {
     private RestTemplate restTemplate;
@@ -57,16 +58,18 @@ public class HttpService {
         return responseEntity;
 
     }
-    public ResponseEntity sendUrlencoded(String url,Map<String,String> map)throws IOException{
+    public ResponseEntity sendUrlencoded(String url,Map<String,String> map){
         MultiValueMap<String, String> postParameters = new LinkedMultiValueMap<>();
-        for (Map.Entry<String,String> entry : map.entrySet()) {
-            postParameters.add(entry.getKey(),entry.getValue());
+        if(map!=null){
+            for (Map.Entry<String,String> entry : map.entrySet()) {
+                postParameters.add(entry.getKey(),entry.getValue());
+            }
         }
         HttpHeaders headers = new HttpHeaders();		//定义请求参数类型
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<>(postParameters, headers);
         ResponseEntity<String> responseEntity = null;
-        responseEntity = restTemplate.exchange(BaseUrl1+url, HttpMethod.POST,httpEntity,String.class);
+        responseEntity = restTemplate.postForEntity("http://"+url,httpEntity,String.class);
         return responseEntity;
     }
     public ResponseEntity sendJson(String url,Map<String,String> map){
@@ -78,9 +81,9 @@ public class HttpService {
         responseEntity = restTemplate.exchange(BaseUrl+url, HttpMethod.POST,httpEntity,String.class);
         return responseEntity;
     }
-    public ResponseEntity url1Get(String url,Map<String,Object> map){
+    public ResponseEntity urlGet(String url,Map<String,Object> map){
         RestTemplate restTemplate=new RestTemplate();
-        ResponseEntity<String> responseEntity = restTemplate.getForEntity(BaseUrl1+url, String.class,map);
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity("http://"+url, String.class,map);
         return responseEntity;
     }
 

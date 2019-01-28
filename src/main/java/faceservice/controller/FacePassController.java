@@ -19,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -203,11 +202,7 @@ public class FacePassController {
         } else
             return new ResponseEntity("param not allowed null", HttpStatus.BAD_REQUEST);
     }
-    @RequestMapping(value = "Parking/GetMac", method = RequestMethod.GET)
-    @ResponseBody
-    public ResponseEntity<String> parkingFaceGet()throws IOException{
-        return new ResponseEntity(parkingService.parkingGetMac(), HttpStatus.BAD_REQUEST);
-    }
+
 
     /*
    * post json使用实例

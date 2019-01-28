@@ -1,5 +1,6 @@
 package faceservice.tools.Imagehandle;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,7 +12,7 @@ import java.io.IOException;
 /**
  * 图片检测及处理
  */
-
+@Slf4j
 public class ImageConvert {
     /**
      * 图片分辨率判断及压缩
@@ -21,15 +22,14 @@ public class ImageConvert {
     public static File getVlidImage(File file) throws IOException {
 
 
-        boolean b = CheckImagesFormatUtil.checkImageElement(file, 1280, 720);
+        boolean b = CheckImagesFormatUtil.checkImageElement(file, 1680, 1200);
         if (b){
-            System.out.println("图片满足注册要求，进入人脸注册阶段");
             return file;
         }else {
-            System.out.println("图片格式不满足需求，进入压缩模式。。。。。。");
+            log.info("压缩传入的图片");
             File tempimage=new File(ResourceUtils.getURL("classpath:Face/tempface.jpg").getPath());
             FileOutputStream fos = new FileOutputStream(tempimage);
-            ImageTools.thumbnail_w_h(file,4096,4096,fos);
+            ImageTools.thumbnail_w_h(file,1280,720,fos);
             return tempimage;
         }
     }
@@ -47,7 +47,7 @@ public class ImageConvert {
         for (File f: files
              ) {
 
-            System.out.println("图片格式不满足需求，进入压缩模式。。。。。。");
+
 
             String f1 = f.getPath();
             System.out.println(f1);
@@ -57,7 +57,6 @@ public class ImageConvert {
             File file1 = new File("D:/sucess");
 
             if (!file1.exists()){
-                System.out.println("路径不存在！自动创建D:/sucess 路径 存储压缩过后的图片");
                 file1.mkdir();
             }
             File sucess = new File("D:/sucess/"+id);
@@ -69,11 +68,4 @@ public class ImageConvert {
 
 
     }
-
-    public static void main(String[] args) throws IOException {
-        File file = new File( "D:\\error");
-       imgJudgement1(file);
-    }
-
-
 }

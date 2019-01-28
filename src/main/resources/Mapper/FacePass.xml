@@ -26,6 +26,12 @@
         FROM facepass
         WHERE id = #{id}
     </select>
+    <select id="getId" parameterType="java.lang.String" resultType="java.lang.String" >
+        SELECT
+        id
+        FROM facepass
+        WHERE face_token = #{face_token}
+    </select>
     <select id="getFace_TokenList" parameterType="java.lang.String" resultType="java.lang.String" >
         SELECT
         face_token
@@ -71,12 +77,12 @@
     <delete id="delete" parameterType="java.lang.String">
         DELETE FROM
         facepass
-        WHERE
+        WHERE 1=1
         <if test="id != null" >
-            id=#{id,jdbcType=VARCHAR} AND
+            AND  id=#{id,jdbcType=VARCHAR}
         </if>
         <if test="face_token != null" >
-            face_token=#{face_token,jdbcType=VARCHAR}
+            AND  face_token=#{face_token,jdbcType=VARCHAR}
         </if>
     </delete>
 

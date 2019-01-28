@@ -10,6 +10,7 @@ public class Response {
     private String message;
     private long timestamp;
     private List<Map<String, Object>> data;
+    private String mac;
     public final static Map<Integer, String> ErrorMessage = new HashMap<Integer, String>() {
         {
             put(0, "success");
@@ -17,7 +18,8 @@ public class Response {
             put(1501,"ID_HAS_BEEN_USED");
             put(1502,"INVALID_GROUP_NAME");
             put(1503,"ID_IS_NOT_EXIT");
-            put(104202 , "FACE_TOKEN_NOT_EXIST");
+            put(1504,"IP_IS_INVALID");
+            put(104202, "FACE_TOKEN_NOT_EXIST");
             put(104200, "FACE_NOT_FOUND");
             put(104201, "BAD_QUALITY");
             put(104000, "ILLEGAL_JSON_BODY");
@@ -26,8 +28,10 @@ public class Response {
             put(104100, "UNSUPPORTED_IMAGE_FORMAT");
             put(104101, "INVALID_IMAGE_RESOLUTION");
             put(104102, "INVALID_IMAGE_FILE_SIZE");
+            put(104301, "GROUP_NAME_NOT_EXIST");
         }
     };
+
 
     public Response() {
         this.code = 0;
@@ -66,5 +70,12 @@ public class Response {
 
     public void setData(List<Map<String, Object>> data) {
         this.data = data;
+    }
+    public void setMac(String mac) {
+        this.mac = mac;
+    }
+
+    public String getMac() {
+        return mac;
     }
 }

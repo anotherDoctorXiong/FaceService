@@ -1,7 +1,6 @@
 package faceservice.mapper;
 
 import faceservice.model.User;
-import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 
@@ -15,6 +14,8 @@ public interface UserMapper {
     void update(User info);
 
     void delete(String id);
+
+    void updateFace(String id,byte[] face);
 
     void deleteGroup(List<String> list);
 

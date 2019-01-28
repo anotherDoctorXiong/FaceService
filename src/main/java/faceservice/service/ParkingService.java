@@ -49,9 +49,7 @@ public class ParkingService {
         map.put("faceId",faceId);
         return getData(httpService.sendUrlencoded("face/base/query",map));
     }
-    public String parkingGetMac()throws IOException{
-        return getData(httpService.url1Get("face/base/query",null));
-    }
+
 
     private static String getMessage(ResponseEntity response){
         String message=response.getBody().toString();

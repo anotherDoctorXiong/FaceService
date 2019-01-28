@@ -2,7 +2,7 @@ package faceservice.model;
 
 import java.io.Serializable;
 
-public class FacePass implements Serializable {
+public class FacePass implements Serializable{
     private String id;
     private String face_token;
     private String group;

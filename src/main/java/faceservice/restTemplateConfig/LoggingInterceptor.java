@@ -1,12 +1,19 @@
 package faceservice.restTemplateConfig;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.beanutils.BeanUtils;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
-
+import org.springframework.util.StreamUtils;
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
+import java.net.URLDecoder;
+import java.nio.charset.Charset;
 
 @Slf4j
 public class LoggingInterceptor implements ClientHttpRequestInterceptor {
@@ -15,11 +22,13 @@ public class LoggingInterceptor implements ClientHttpRequestInterceptor {
         traceRequest(request, body);
         ClientHttpResponse response=execution.execute(request, body);
         traceResponse(response);
-        return execution.execute(request, body);
+        return response;
     }
 
     private void traceRequest(HttpRequest request, byte[] body) throws IOException {
         String bodyMessage=body.length>200?"图片文件不予显示": new String(body, "UTF-8");
+        bodyMessage=request.getHeaders().getContentType().includes(MediaType.APPLICATION_FORM_URLENCODED)
+                ?URLDecoder.decode(bodyMessage,"UTF-8"):bodyMessage;
         log.info("===========================request begin================================================");
         log.info("URI         : {}", request.getURI());
         log.info("Method      : {}", request.getMethod());
@@ -29,34 +38,21 @@ public class LoggingInterceptor implements ClientHttpRequestInterceptor {
     }
 
     private void traceResponse(ClientHttpResponse response) throws IOException {
+
         //为什么在调用response.getstatuscode（）后调用response.getBody（）不抛出IOException，
         // 是因为getstatuscode在内部调用getinputstream，所以调用getBody时，errorstream不为空。
         //String bodyMessage=body.length>200?"图片文件不予显示": new String(body, "UTF-8");
-        response.getStatusCode();
-        String bodyMessage=null;
-        StringBuilder inputStringBuilder = new StringBuilder();
-        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(response.getBody(), "UTF-8"))) {
-            String line = bufferedReader.readLine();
-            while (line != null) {
-                inputStringBuilder.append(line);
-                inputStringBuilder.append('\n');
-                line = bufferedReader.readLine();
-                if(inputStringBuilder.length()<300){
-                    continue;
-                }else
-                    break;
-            }
-            if(inputStringBuilder.length()>300){
-                bodyMessage="文件过大不予显示";
-            }else
-                bodyMessage=inputStringBuilder.toString();
-        }
+
         log.info("============================response begin==========================================");
         log.info("Status code  : {}", response.getStatusCode());
         log.info("Status text  : {}", response.getStatusText());
         log.info("Headers      : {}", response.getHeaders());
-        log.info("Response body: {}", bodyMessage);//WARNING: comment out in production to improve performance
-        log.info("=======================response end=================================================");
+        if(response.getBody().available()<300){
+            log.info("Response body: {}", StreamUtils.copyToString(response.getBody(), Charset.defaultCharset()));//WARNING: comment out in production to improve performance
+        }else {
+            log.info("Response body: 文件内容不予显示");
+        }
+         log.info("=======================response end=================================================");
     }
 
 }
