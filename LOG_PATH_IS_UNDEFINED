@@ -1,0 +1,128 @@
+2019-01-14 17:33:59 [org.springframework.boot.StartupInfoLogger:50] - Starting DemoApplication on AJBC-1677 with PID 5940 (E:\java\IDEA\springboot\springBoot\FaceService\target\classes started by xiongxin in E:\java\IDEA\springboot\springBoot\FaceService)
+2019-01-14 17:33:59 [org.springframework.boot.SpringApplication:680] - No active profile set, falling back to default profiles: default
+2019-01-14 17:33:59 [org.springframework.context.support.AbstractApplicationContext:590] - Refreshing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@56e8b606: startup date [Mon Jan 14 17:33:59 CST 2019]; root of context hierarchy
+2019-01-14 17:34:01 [org.springframework.boot.web.embedded.tomcat.TomcatWebServer:91] - Tomcat initialized with port(s): 8080 (http)
+2019-01-14 17:34:01 [org.apache.juli.logging.DirectJDKLog:180] - Initializing ProtocolHandler ["http-nio-8080"]
+2019-01-14 17:34:01 [org.apache.juli.logging.DirectJDKLog:180] - Starting service [Tomcat]
+2019-01-14 17:34:01 [org.apache.juli.logging.DirectJDKLog:180] - Starting Servlet Engine: Apache Tomcat/8.5.34
+2019-01-14 17:34:01 [org.apache.juli.logging.DirectJDKLog:180] - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\Program Files\Java\jdk-9.0.1\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;D:\办公软件\Git\cmd;%JA;A_HOME%\bin;C:\Program Files\Java\jdk-9.0.1\jre\bin;D:\apache-maven-3.5.2\bin;C:\Users\xiongxin\AppData\Local\Programs\Python\Python36;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\Users\xiongxin\AppData\Local\Programs\Python\Python36\Scripts\;C:\Users\xiongxin\AppData\Local\Programs\Python\Python36\;C:\Users\xiongxin\AppData\Roaming\npm;C:\Program Files\Docker Toolbox;.]
+2019-01-14 17:34:01 [org.apache.juli.logging.DirectJDKLog:180] - Initializing Spring embedded WebApplicationContext
+2019-01-14 17:34:01 [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext:285] - Root WebApplicationContext: initialization completed in 2043 ms
+2019-01-14 17:34:01 [org.springframework.boot.web.servlet.ServletRegistrationBean:187] - Servlet dispatcherServlet mapped to [/]
+2019-01-14 17:34:01 [org.springframework.boot.web.servlet.AbstractFilterRegistrationBean:245] - Mapping filter: 'characterEncodingFilter' to: [/*]
+2019-01-14 17:34:01 [org.springframework.boot.web.servlet.AbstractFilterRegistrationBean:245] - Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2019-01-14 17:34:01 [org.springframework.boot.web.servlet.AbstractFilterRegistrationBean:245] - Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2019-01-14 17:34:01 [org.springframework.boot.web.servlet.AbstractFilterRegistrationBean:245] - Mapping filter: 'requestContextFilter' to: [/*]
+2019-01-14 17:34:02 [io.netty.util.internal.logging.Slf4JLogger:101] - Your platform does not provide complete low-level API for accessing direct buffers reliably. Unless explicitly requested, heap buffer will always be preferred to avoid potential system unstability.
+2019-01-14 17:34:02 [org.springframework.web.servlet.handler.AbstractUrlHandlerMapping:373] - Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2019-01-14 17:34:02 [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter:588] - Looking for @ControllerAdvice: org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@56e8b606: startup date [Mon Jan 14 17:33:59 CST 2019]; root of context hierarchy
+2019-01-14 17:34:02 [org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry:549] - Mapped "{[/server/facepass/TestGet],methods=[GET]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> faceservice.controller.FacePassController.getUrl(java.util.Map<java.lang.String, java.lang.Object>)
+2019-01-14 17:34:02 [org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry:549] - Mapped "{[/server/facepass/face/add],methods=[POST]}" onto public org.springframework.http.ResponseEntity<faceservice.model.Response> faceservice.controller.FacePassController.addFace(faceservice.model.FacePassAddRequest,org.springframework.validation.BindingResult) throws java.lang.Exception
+2019-01-14 17:34:02 [org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry:549] - Mapped "{[/server/facepass/Face/Delete],methods=[POST]}" onto public org.springframework.http.ResponseEntity<java.lang.String> faceservice.controller.FacePassController.deleteFace(java.util.Map<java.lang.String, java.lang.String>) throws java.lang.InterruptedException
+2019-01-14 17:34:02 [org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry:549] - Mapped "{[/server/facepass/Face/Query],methods=[POST]}" onto public org.springframework.http.ResponseEntity<java.lang.String> faceservice.controller.FacePassController.queryFace(java.util.Map<java.lang.String, java.lang.String>) throws java.lang.InterruptedException
+2019-01-14 17:34:02 [org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry:549] - Mapped "{[/server/facepass/Face/Update],methods=[POST]}" onto public org.springframework.http.ResponseEntity<java.lang.String> faceservice.controller.FacePassController.updateFace(java.util.Map<java.lang.String, java.lang.String>,org.springframework.web.multipart.MultipartFile) throws java.lang.Exception
+2019-01-14 17:34:02 [org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry:549] - Mapped "{[/server/facepass/Group/Query],methods=[POST]}" onto public org.springframework.http.ResponseEntity faceservice.controller.FacePassController.queryGroup(java.util.Map<java.lang.String, java.lang.String>)
+2019-01-14 17:34:02 [org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry:549] - Mapped "{[/server/facepass/Group/Delete],methods=[POST]}" onto public org.springframework.http.ResponseEntity<java.lang.String> faceservice.controller.FacePassController.deleteGroup(java.util.Map<java.lang.String, java.lang.String>)
+2019-01-14 17:34:02 [org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry:549] - Mapped "{[/server/facepass/Parking/Face/Add],methods=[POST]}" onto public org.springframework.http.ResponseEntity<java.lang.String> faceservice.controller.FacePassController.parkingFaceAdd(java.util.Map<java.lang.String, java.lang.String>,org.springframework.web.multipart.MultipartFile) throws java.io.IOException
+2019-01-14 17:34:02 [org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry:549] - Mapped "{[/server/facepass/Parking/Face/Delete],methods=[POST]}" onto public org.springframework.http.ResponseEntity<java.lang.String> faceservice.controller.FacePassController.parkingFaceDelete(java.util.Map<java.lang.String, java.lang.String>) throws java.io.IOException
+2019-01-14 17:34:02 [org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry:549] - Mapped "{[/server/facepass/Parking/Face/Update],methods=[POST]}" onto public org.springframework.http.ResponseEntity<java.lang.String> faceservice.controller.FacePassController.parkingFaceUpdate(java.util.Map<java.lang.String, java.lang.String>,org.springframework.web.multipart.MultipartFile) throws java.io.IOException
+2019-01-14 17:34:02 [org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry:549] - Mapped "{[/server/facepass/Parking/Face/Query],methods=[POST]}" onto public org.springframework.http.ResponseEntity<java.lang.String> faceservice.controller.FacePassController.parkingFaceQuery(java.util.Map<java.lang.String, java.lang.String>) throws java.io.IOException
+2019-01-14 17:34:02 [org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry:549] - Mapped "{[/server/facepass/Parking/GetFace],methods=[POST]}" onto public org.springframework.http.ResponseEntity<java.lang.String> faceservice.controller.FacePassController.parkingFaceGet(java.util.Map<java.lang.String, java.lang.String>) throws java.io.IOException
+2019-01-14 17:34:02 [org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry:549] - Mapped "{[/server/facepass/Parking/GetMac],methods=[GET]}" onto public org.springframework.http.ResponseEntity<java.lang.String> faceservice.controller.FacePassController.parkingFaceGet() throws java.io.IOException
+2019-01-14 17:34:02 [org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry:549] - Mapped "{[/server/facepass/Test],methods=[GET]}" onto public void faceservice.controller.FacePassController.Test(java.util.Map<java.lang.String, java.lang.String>)
+2019-01-14 17:34:02 [org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry:549] - Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+2019-01-14 17:34:02 [org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry:549] - Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2019-01-14 17:34:02 [org.springframework.web.servlet.handler.AbstractUrlHandlerMapping:373] - Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2019-01-14 17:34:02 [org.springframework.web.servlet.handler.AbstractUrlHandlerMapping:373] - Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2019-01-14 17:34:02 [org.springframework.jmx.export.MBeanExporter:433] - Registering beans for JMX exposure on startup
+2019-01-14 17:34:02 [org.springframework.jmx.export.MBeanExporter:895] - Bean with name 'dataSource' has been autodetected for JMX exposure
+2019-01-14 17:34:02 [org.springframework.jmx.export.MBeanExporter:668] - Located MBean 'dataSource': registering with JMX server as MBean [com.zaxxer.hikari:name=dataSource,type=HikariDataSource]
+2019-01-14 17:34:02 [org.apache.juli.logging.DirectJDKLog:180] - Starting ProtocolHandler ["http-nio-8080"]
+2019-01-14 17:34:02 [org.apache.juli.logging.DirectJDKLog:180] - Using a shared selector for servlet write/read
+2019-01-14 17:34:02 [org.springframework.boot.web.embedded.tomcat.TomcatWebServer:206] - Tomcat started on port(s): 8080 (http) with context path ''
+2019-01-14 17:34:02 [org.springframework.boot.StartupInfoLogger:59] - Started DemoApplication in 3.438 seconds (JVM running for 4.635)
+2019-01-14 17:34:06 [org.apache.juli.logging.DirectJDKLog:180] - Initializing Spring FrameworkServlet 'dispatcherServlet'
+2019-01-14 17:34:06 [org.springframework.web.servlet.FrameworkServlet:494] - FrameworkServlet 'dispatcherServlet': initialization started
+2019-01-14 17:34:06 [org.springframework.web.servlet.FrameworkServlet:509] - FrameworkServlet 'dispatcherServlet': initialization completed in 19 ms
+2019-01-14 17:34:09 [com.zaxxer.hikari.HikariDataSource:110] - HikariPool-1 - Starting...
+2019-01-14 17:34:10 [com.zaxxer.hikari.HikariDataSource:123] - HikariPool-1 - Start completed.
+2019-01-14 17:34:16 [faceservice.service.FacePassService:35] - <200,{
+  "code": 0,
+  "message": "",
+  "timecost": 880,
+  "timestamp": 1547458442264,
+  "data": {
+    "face_token": "G0uyjVJdi8o6rlxMFGDTIg==",
+    "image_id": "A6cjo3sktka9hOUIIcUH5g==",
+    "rect": {
+      "bottom": 1848,
+      "left": 1682,
+      "right": 2756,
+      "top": 774
+    }
+  }
+},{Content-Length=[288], Content-Type=[application/json; charset=utf-8], Server=[beegoServer:1.9.0], Date=[Mon, 14 Jan 2019 09:34:03 GMT]}>
+2019-01-14 17:35:36 [org.springframework.boot.StartupInfoLogger:50] - Starting DemoApplication on AJBC-1677 with PID 23680 (E:\java\IDEA\springboot\springBoot\FaceService\target\classes started by xiongxin in E:\java\IDEA\springboot\springBoot\FaceService)
+2019-01-14 17:35:36 [org.springframework.boot.SpringApplication:680] - No active profile set, falling back to default profiles: default
+2019-01-14 17:35:36 [org.springframework.context.support.AbstractApplicationContext:590] - Refreshing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@23bff419: startup date [Mon Jan 14 17:35:36 CST 2019]; root of context hierarchy
+2019-01-14 17:35:39 [org.springframework.boot.web.embedded.tomcat.TomcatWebServer:91] - Tomcat initialized with port(s): 8080 (http)
+2019-01-14 17:35:39 [org.apache.juli.logging.DirectJDKLog:180] - Initializing ProtocolHandler ["http-nio-8080"]
+2019-01-14 17:35:39 [org.apache.juli.logging.DirectJDKLog:180] - Starting service [Tomcat]
+2019-01-14 17:35:39 [org.apache.juli.logging.DirectJDKLog:180] - Starting Servlet Engine: Apache Tomcat/8.5.34
+2019-01-14 17:35:39 [org.apache.juli.logging.DirectJDKLog:180] - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\Program Files\Java\jdk-9.0.1\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;D:\办公软件\Git\cmd;%JA;A_HOME%\bin;C:\Program Files\Java\jdk-9.0.1\jre\bin;D:\apache-maven-3.5.2\bin;C:\Users\xiongxin\AppData\Local\Programs\Python\Python36;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\Users\xiongxin\AppData\Local\Programs\Python\Python36\Scripts\;C:\Users\xiongxin\AppData\Local\Programs\Python\Python36\;C:\Users\xiongxin\AppData\Roaming\npm;C:\Program Files\Docker Toolbox;.]
+2019-01-14 17:35:39 [org.apache.juli.logging.DirectJDKLog:180] - Initializing Spring embedded WebApplicationContext
+2019-01-14 17:35:39 [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext:285] - Root WebApplicationContext: initialization completed in 2888 ms
+2019-01-14 17:35:39 [org.springframework.boot.web.servlet.ServletRegistrationBean:187] - Servlet dispatcherServlet mapped to [/]
+2019-01-14 17:35:39 [org.springframework.boot.web.servlet.AbstractFilterRegistrationBean:245] - Mapping filter: 'characterEncodingFilter' to: [/*]
+2019-01-14 17:35:39 [org.springframework.boot.web.servlet.AbstractFilterRegistrationBean:245] - Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2019-01-14 17:35:39 [org.springframework.boot.web.servlet.AbstractFilterRegistrationBean:245] - Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2019-01-14 17:35:39 [org.springframework.boot.web.servlet.AbstractFilterRegistrationBean:245] - Mapping filter: 'requestContextFilter' to: [/*]
+2019-01-14 17:35:40 [io.netty.util.internal.logging.Slf4JLogger:101] - Your platform does not provide complete low-level API for accessing direct buffers reliably. Unless explicitly requested, heap buffer will always be preferred to avoid potential system unstability.
+2019-01-14 17:35:40 [org.springframework.web.servlet.handler.AbstractUrlHandlerMapping:373] - Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2019-01-14 17:35:40 [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter:588] - Looking for @ControllerAdvice: org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@23bff419: startup date [Mon Jan 14 17:35:36 CST 2019]; root of context hierarchy
+2019-01-14 17:35:40 [org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry:549] - Mapped "{[/server/facepass/TestGet],methods=[GET]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> faceservice.controller.FacePassController.getUrl(java.util.Map<java.lang.String, java.lang.Object>)
+2019-01-14 17:35:40 [org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry:549] - Mapped "{[/server/facepass/Parking/Face/Add],methods=[POST]}" onto public org.springframework.http.ResponseEntity<java.lang.String> faceservice.controller.FacePassController.parkingFaceAdd(java.util.Map<java.lang.String, java.lang.String>,org.springframework.web.multipart.MultipartFile) throws java.io.IOException
+2019-01-14 17:35:40 [org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry:549] - Mapped "{[/server/facepass/Parking/Face/Delete],methods=[POST]}" onto public org.springframework.http.ResponseEntity<java.lang.String> faceservice.controller.FacePassController.parkingFaceDelete(java.util.Map<java.lang.String, java.lang.String>) throws java.io.IOException
+2019-01-14 17:35:40 [org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry:549] - Mapped "{[/server/facepass/Parking/Face/Update],methods=[POST]}" onto public org.springframework.http.ResponseEntity<java.lang.String> faceservice.controller.FacePassController.parkingFaceUpdate(java.util.Map<java.lang.String, java.lang.String>,org.springframework.web.multipart.MultipartFile) throws java.io.IOException
+2019-01-14 17:35:40 [org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry:549] - Mapped "{[/server/facepass/face/add],methods=[POST]}" onto public org.springframework.http.ResponseEntity<faceservice.model.Response> faceservice.controller.FacePassController.addFace(faceservice.model.FacePassAddRequest,org.springframework.validation.BindingResult) throws java.lang.Exception
+2019-01-14 17:35:40 [org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry:549] - Mapped "{[/server/facepass/Face/Delete],methods=[POST]}" onto public org.springframework.http.ResponseEntity<java.lang.String> faceservice.controller.FacePassController.deleteFace(java.util.Map<java.lang.String, java.lang.String>) throws java.lang.InterruptedException
+2019-01-14 17:35:40 [org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry:549] - Mapped "{[/server/facepass/Face/Query],methods=[POST]}" onto public org.springframework.http.ResponseEntity<java.lang.String> faceservice.controller.FacePassController.queryFace(java.util.Map<java.lang.String, java.lang.String>) throws java.lang.InterruptedException
+2019-01-14 17:35:40 [org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry:549] - Mapped "{[/server/facepass/Face/Update],methods=[POST]}" onto public org.springframework.http.ResponseEntity<java.lang.String> faceservice.controller.FacePassController.updateFace(java.util.Map<java.lang.String, java.lang.String>,org.springframework.web.multipart.MultipartFile) throws java.lang.Exception
+2019-01-14 17:35:40 [org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry:549] - Mapped "{[/server/facepass/Group/Query],methods=[POST]}" onto public org.springframework.http.ResponseEntity faceservice.controller.FacePassController.queryGroup(java.util.Map<java.lang.String, java.lang.String>)
+2019-01-14 17:35:40 [org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry:549] - Mapped "{[/server/facepass/Group/Delete],methods=[POST]}" onto public org.springframework.http.ResponseEntity<java.lang.String> faceservice.controller.FacePassController.deleteGroup(java.util.Map<java.lang.String, java.lang.String>)
+2019-01-14 17:35:40 [org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry:549] - Mapped "{[/server/facepass/Parking/Face/Query],methods=[POST]}" onto public org.springframework.http.ResponseEntity<java.lang.String> faceservice.controller.FacePassController.parkingFaceQuery(java.util.Map<java.lang.String, java.lang.String>) throws java.io.IOException
+2019-01-14 17:35:40 [org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry:549] - Mapped "{[/server/facepass/Parking/GetMac],methods=[GET]}" onto public org.springframework.http.ResponseEntity<java.lang.String> faceservice.controller.FacePassController.parkingFaceGet() throws java.io.IOException
+2019-01-14 17:35:40 [org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry:549] - Mapped "{[/server/facepass/Parking/GetFace],methods=[POST]}" onto public org.springframework.http.ResponseEntity<java.lang.String> faceservice.controller.FacePassController.parkingFaceGet(java.util.Map<java.lang.String, java.lang.String>) throws java.io.IOException
+2019-01-14 17:35:40 [org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry:549] - Mapped "{[/server/facepass/Test],methods=[GET]}" onto public void faceservice.controller.FacePassController.Test(java.util.Map<java.lang.String, java.lang.String>)
+2019-01-14 17:35:40 [org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry:549] - Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+2019-01-14 17:35:40 [org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry:549] - Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2019-01-14 17:35:40 [org.springframework.web.servlet.handler.AbstractUrlHandlerMapping:373] - Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2019-01-14 17:35:40 [org.springframework.web.servlet.handler.AbstractUrlHandlerMapping:373] - Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2019-01-14 17:35:41 [org.springframework.jmx.export.MBeanExporter:433] - Registering beans for JMX exposure on startup
+2019-01-14 17:35:41 [org.springframework.jmx.export.MBeanExporter:895] - Bean with name 'dataSource' has been autodetected for JMX exposure
+2019-01-14 17:35:41 [org.springframework.jmx.export.MBeanExporter:668] - Located MBean 'dataSource': registering with JMX server as MBean [com.zaxxer.hikari:name=dataSource,type=HikariDataSource]
+2019-01-14 17:35:41 [org.apache.juli.logging.DirectJDKLog:180] - Starting ProtocolHandler ["http-nio-8080"]
+2019-01-14 17:35:41 [org.apache.juli.logging.DirectJDKLog:180] - Using a shared selector for servlet write/read
+2019-01-14 17:35:41 [org.springframework.boot.web.embedded.tomcat.TomcatWebServer:206] - Tomcat started on port(s): 8080 (http) with context path ''
+2019-01-14 17:35:41 [org.springframework.boot.StartupInfoLogger:59] - Started DemoApplication in 4.808 seconds (JVM running for 7.931)
+2019-01-14 17:35:46 [org.apache.juli.logging.DirectJDKLog:180] - Initializing Spring FrameworkServlet 'dispatcherServlet'
+2019-01-14 17:35:46 [org.springframework.web.servlet.FrameworkServlet:494] - FrameworkServlet 'dispatcherServlet': initialization started
+2019-01-14 17:35:46 [org.springframework.web.servlet.FrameworkServlet:509] - FrameworkServlet 'dispatcherServlet': initialization completed in 14 ms
+2019-01-14 17:35:49 [com.zaxxer.hikari.HikariDataSource:110] - HikariPool-1 - Starting...
+2019-01-14 17:35:49 [com.zaxxer.hikari.HikariDataSource:123] - HikariPool-1 - Start completed.
+2019-01-14 17:35:54 [faceservice.service.FacePassService:35] - <200,{
+  "code": 0,
+  "message": "",
+  "timecost": 858,
+  "timestamp": 1547458540391,
+  "data": {
+    "face_token": "BDesfDWVRoNv7c96oQ3uEQ==",
+    "image_id": "A6cjo3sktka9hOUIIcUH5g==",
+    "rect": {
+      "bottom": 1848,
+      "left": 1682,
+      "right": 2756,
+      "top": 774
+    }
+  }
+},{Content-Length=[288], Content-Type=[application/json; charset=utf-8], Server=[beegoServer:1.9.0], Date=[Mon, 14 Jan 2019 09:35:41 GMT]}>

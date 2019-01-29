@@ -61,7 +61,6 @@ public class HostAddRequest {
                     this.image = image;
                 }
             } catch (IOException e) {
-                e.printStackTrace();
             }
         }
     }

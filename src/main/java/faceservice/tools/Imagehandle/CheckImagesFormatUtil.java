@@ -26,7 +26,7 @@ public class CheckImagesFormatUtil {
         BufferedImage bufferedImage = ImageIO.read(file);
         int width = bufferedImage.getWidth();
         int height = bufferedImage.getHeight();
-        if (bufferedImage != null && height == imageHeight && width == imageWidth) {
+        if (bufferedImage != null && height < imageHeight && width < imageWidth) {
             result = true;
         }
         return result;

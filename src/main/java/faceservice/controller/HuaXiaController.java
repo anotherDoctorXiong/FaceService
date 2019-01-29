@@ -63,7 +63,7 @@ public class HuaXiaController {
     public ResponseEntity<Response> updataFace(String id, MultipartFile image)throws IOException{
         Response res=new Response();
         //对参数进行校验
-        if(id==null||image==null){
+        if(id==null||image==null||image.isEmpty()){
             res.setCode(1);
             return new ResponseEntity(res,HttpStatus.OK);
         }

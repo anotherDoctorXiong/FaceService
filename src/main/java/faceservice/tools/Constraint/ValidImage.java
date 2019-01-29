@@ -9,8 +9,8 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.METHOD,ElementType.FIELD})
 @Retention(value = RetentionPolicy.RUNTIME)
-@Constraint(validatedBy=CheckHostImpl.class)
-public @interface ValidHost {
+@Constraint(validatedBy=CheckImageImpl.class)
+public @interface ValidImage {
     String message();
     Class<?>[] groups() default { };
     Class<? extends Payload>[] payload() default {};

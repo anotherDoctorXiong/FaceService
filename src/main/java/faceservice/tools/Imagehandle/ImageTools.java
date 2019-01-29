@@ -117,6 +117,15 @@ public class ImageTools{
             e.printStackTrace();
         }
     }
+    public static boolean isPic(File file) {
+        String filename=file.getName();
+        String type=filename.split("\\.")[1];
+        if(type.equals("jpg")||type.equals("jpeg")||type.equals("png")){
+            return true;
+        }else
+            return false;
+
+    }
 
 
 

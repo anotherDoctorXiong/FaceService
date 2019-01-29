@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class ConstraintImpl implements ConstraintValidator<ValidHost,Object> {
+public class CheckHostImpl implements ConstraintValidator<ValidHost,Object> {
     @Autowired
     private Host host;
     @Override
