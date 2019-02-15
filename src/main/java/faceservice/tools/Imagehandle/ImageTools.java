@@ -109,7 +109,7 @@ public class ImageTools{
                 // 输出为文件
                 System.out.println(srcImageFile);
                 if (srcImageFile.exists()){
-                    srcImageFile.exists();
+                    srcImageFile.delete();
                 }
                 ImageIO.write(tag, "JPEG", out);
             }
@@ -119,6 +119,9 @@ public class ImageTools{
     }
     public static boolean isPic(File file) {
         String filename=file.getName();
+        if(!filename.contains(".")){
+            return false;
+        }
         String type=filename.split("\\.")[1];
         if(type.equals("jpg")||type.equals("jpeg")||type.equals("png")){
             return true;

@@ -58,7 +58,7 @@ public class FacePassAddRequest implements Serializable{
         return image;
     }
 
-    public void setImage(MultipartFile file) {
+    public void setImage(MultipartFile file)throws IOException {
         if(file!=null){
             File file1 = new File("D:/FaceImage/FacePass");
             if (!file1.exists()){

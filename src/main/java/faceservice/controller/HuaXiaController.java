@@ -48,9 +48,10 @@ public class HuaXiaController {
     public ResponseEntity<Response> deleteFace(@RequestParam String id) {
         Response res=new Response();
         //对参数进行校验
+        String mac=huaXiaService.getMacAddress(id);
         int a=huaXiaService.faceDelete(id);
         if(a==0){
-            res.setMac(huaXiaService.getMacAddress(id));
+            res.setMac(mac);
             res.setCode(a);
         }else if(a==1) {
             res.setCode(a);

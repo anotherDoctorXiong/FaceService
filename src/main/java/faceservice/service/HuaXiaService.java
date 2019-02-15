@@ -164,6 +164,11 @@ public class HuaXiaService {
     }
 
     public String getMacAddress(String id) {
-        return huaXiaMapper.getOne(id).getMac();
+        HuaXia h = huaXiaMapper.getOne(id);
+        if (h != null) {
+            return h.getMac();
+        } else
+            return "";
     }
 }
+
