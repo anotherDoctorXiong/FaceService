@@ -1,13 +1,11 @@
 package faceservice.tools.Constraint;
 
 
-import org.springframework.stereotype.Component;
-
 import java.net.InetAddress;
 
-@Component
+
 public class Host {
-    public boolean isHostConnectable(String host) {
+    public static boolean isHostConnectable(String host) {
         InetAddress ad = null;
         try {
             ad = InetAddress.getByName(host);

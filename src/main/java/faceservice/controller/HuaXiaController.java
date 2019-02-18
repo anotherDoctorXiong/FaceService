@@ -1,12 +1,9 @@
 package faceservice.controller;
 
 
-import faceservice.model.FacePassAddRequest;
 import faceservice.model.HostAddRequest;
 import faceservice.model.Response;
 import faceservice.service.HuaXiaService;
-import faceservice.tools.Constraint.Host;
-import faceservice.tools.Imagehandle.ImageConvert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
+
+import static faceservice.tools.Constraint.Host.isHostConnectable;
 import static faceservice.tools.Imagehandle.ImageTools.isPic;
 
 @RequestMapping(value = "/host/huaxia")
@@ -102,14 +101,26 @@ public class HuaXiaController {
             res.setCode(a);
         return new ResponseEntity(res,HttpStatus.OK);
     }
-    @RequestMapping(value = "/face/group", method = RequestMethod.POST)
+    @RequestMapping(value = "/group/query", method = RequestMethod.POST)
     public ResponseEntity<Response> queryGroup(@RequestParam String ip) {
-        Host host=new Host();
         Response res=new Response();
-        if(host.isHostConnectable(ip)){
+        if(isHostConnectable(ip)){
             //对参数进行校验
             res.setMessage(huaXiaService.getMessage());
             res.setData(huaXiaService.queryAll(ip));
+        }else
+            res.setCode(1504);
+        return new ResponseEntity(res,HttpStatus.OK);
+    }
+    @RequestMapping(value = "/group/delete", method = RequestMethod.POST)
+    public ResponseEntity<Response> deleteGroup(@RequestParam String ip) {
+        Response res=new Response();
+        if(isHostConnectable(ip)){
+            int a=huaXiaService.deleteAll(ip);
+            if(a==0){
+                res.setCode(a);
+            }else
+                res.setMessage(huaXiaService.getMessage());
         }else
             res.setCode(1504);
         return new ResponseEntity(res,HttpStatus.OK);

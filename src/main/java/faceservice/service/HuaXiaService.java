@@ -140,13 +140,16 @@ public class HuaXiaService {
     }
     public List<Map<String, Object>>  queryAll(String ip){
         ResponseEntity res=httpService.sendUrlencoded(ip+":8080/feature/query/all",null);
-        /*if(getResult(res)){
-            ExtraTokenInServer(huaXiaMapper.queryGroup(ip),getIdList(res)).forEach(p -> {
-                huaXiaMapper.delete(p);
-                userMapper.delete(p);
-            });
-        }*/
         return getData(res);
+    }
+    public int deleteAll(String ip) {
+        ResponseEntity res=httpService.sendUrlencoded(ip+":8080/person/clean/all",null);
+        if(getResult(res)){
+            return 0;
+        }else{
+            setMessage(getMsg(res));
+            return 1;
+        }
     }
     public List<Map<String,Object>> getUserData(String id){
         User user=userMapper.getOne(id);
@@ -170,5 +173,7 @@ public class HuaXiaService {
         } else
             return "";
     }
+
+
 }
 

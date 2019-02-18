@@ -5,9 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+import static faceservice.tools.Constraint.Host.isHostConnectable;
+
 public class CheckHostImpl implements ConstraintValidator<ValidHost,Object> {
-    @Autowired
-    private Host host;
+
     @Override
     public void initialize(ValidHost constraintAnnotation) {
     }
@@ -16,7 +17,7 @@ public class CheckHostImpl implements ConstraintValidator<ValidHost,Object> {
         if(value==null){
             return false;
         }
-        if(host.isHostConnectable(value.toString())){
+        if(isHostConnectable(value.toString())){
             return true;
         }else
             return false;

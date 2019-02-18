@@ -34,8 +34,7 @@ public class FacePassController {
     private UserMapper UserMapper;
     @Autowired
     private ParkingService parkingService;
-    @Autowired
-    private Host host;
+
 
 
 
@@ -130,6 +129,14 @@ public class FacePassController {
             res.setData(service.getGroupData(group));
         }
         res.setCode(a);
+        return new ResponseEntity(res,HttpStatus.OK);
+
+    }
+    @RequestMapping(value = "/group/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity deleteGroup(@RequestParam  String group){
+        Response res=new Response();
+        res.setCode(service.deleteGroup(group));
         return new ResponseEntity(res,HttpStatus.OK);
 
     }
