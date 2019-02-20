@@ -1,10 +1,6 @@
 package faceservice.model;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 
 public class Msg {
     public static final short HEADER = 1976;
