@@ -1,19 +1,27 @@
 package faceservice.model;
 
-import java.io.Serializable;
-
-public class HuaXia implements Serializable {
+public class EI {
     private String id;
     private String ip;
-    private String mac;
-    public HuaXia(String id, String ip, String mac) {
+
+    public String getDevice() {
+        return device;
+    }
+
+    public void setDevice(String device) {
+        this.device = device;
+    }
+
+    private String device;
+    public EI(String id, String ip, String device) {
         this.id = id;
         this.ip = ip;
-        this.mac = mac;
+        this.device = device;
     }
-    public HuaXia(HuaXiaAddRequest addRequest){
+    public EI(EIAddRequest addRequest){
         this.id=addRequest.getId();
         this.ip=addRequest.getIp();
+        this.device = addRequest.getDevice();
     }
 
 
@@ -32,13 +40,5 @@ public class HuaXia implements Serializable {
 
     public void setIp(String ip) {
         this.ip = ip;
-    }
-
-    public String getMac() {
-        return mac;
-    }
-
-    public void setMac(String mac) {
-        this.mac = mac;
     }
 }

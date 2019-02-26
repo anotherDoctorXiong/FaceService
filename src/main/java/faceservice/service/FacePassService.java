@@ -17,7 +17,6 @@ import java.util.*;
 import static faceservice.tools.getInfoFromJsonBody.*;
 
 @Service
-@Slf4j
 public class FacePassService {
     @Autowired
     private UserMapper userMapper;

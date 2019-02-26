@@ -14,9 +14,14 @@ public class User implements Serializable {
         this.name=facePassAddRequest.getName();
         this.face=getBytes(facePassAddRequest.getImage());
     }
-    public  User(HostAddRequest addRequest){
+    public  User(HuaXiaAddRequest addRequest){
         this.id=addRequest.getId();
         this.name=addRequest.getName();
+        this.face=getBytes(addRequest.getImage());
+    }
+    public  User(EIAddRequest addRequest){
+        this.id=addRequest.getId();
+        this.name="";
         this.face=getBytes(addRequest.getImage());
     }
 

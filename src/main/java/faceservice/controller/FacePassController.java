@@ -4,9 +4,7 @@ import faceservice.mapper.UserMapper;
 import faceservice.model.FacePassAddRequest;
 import faceservice.model.Response;
 import faceservice.service.FacePassService;
-import faceservice.service.FaceService;
-import faceservice.service.ParkingService;
-import faceservice.tools.Constraint.Host;
+
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
 import javax.validation.Valid;
-import java.io.IOException;
-import java.util.Map;
+
 
 @Controller
 @RequestMapping(value = "/server/facepass")
@@ -28,12 +23,10 @@ public class FacePassController {
 
     @Autowired
     private FacePassService service;
-    @Autowired
-    private FaceService faceService;
+
     @Autowired
     private UserMapper UserMapper;
-    @Autowired
-    private ParkingService parkingService;
+
 
 
 
@@ -138,6 +131,5 @@ public class FacePassController {
         Response res=new Response();
         res.setCode(service.deleteGroup(group));
         return new ResponseEntity(res,HttpStatus.OK);
-
     }
 }

@@ -29,6 +29,10 @@ public class Response {
             put(104101, "INVALID_IMAGE_RESOLUTION");
             put(104102, "INVALID_IMAGE_FILE_SIZE");
             put(104301, "GROUP_NAME_NOT_EXIST");
+            put(1001000, "UNREAD_PACKAGE");
+            put(1001001, "DATA_GET_FAILED");
+            put(1001002, "UNSUPPORT_IMAGE");
+            put(1001003, "EXCEED_MAX_SIZE");
         }
     };
 

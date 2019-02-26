@@ -67,6 +67,7 @@ public class getInfoFromJsonBody {
 
     }
     public static String getJosnString(Map<String,String> map){
+
         JSONObject json=JSONObject.fromObject(map);
         return json.toString();
     }
@@ -96,5 +97,16 @@ public class getInfoFromJsonBody {
         String message=response.getBody().toString();
         JSONObject json=JSONObject.fromObject(message);
         return json.getString("mac");
+    }
+    public static int getResultCode(String res){
+        JSONObject response=JSONObject.fromObject(res);
+        return Integer.valueOf(response.get("result_code").toString());
+
+    }
+    public static String getResultMessage(String res){
+        JSONObject response=JSONObject.fromObject(res);
+        JSONArray data=(JSONArray)JSONObject.fromObject(response).get("data");
+        JSONObject mes=JSONObject.fromObject(data.get(0));
+        return mes.get("error_msg").toString();
     }
 }

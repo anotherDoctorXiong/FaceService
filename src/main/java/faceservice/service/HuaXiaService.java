@@ -2,7 +2,7 @@ package faceservice.service;
 
 import faceservice.mapper.HuaXiaMapper;
 import faceservice.mapper.UserMapper;
-import faceservice.model.HostAddRequest;
+import faceservice.model.HuaXiaAddRequest;
 import faceservice.model.HuaXia;
 import faceservice.model.User;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +26,7 @@ public class HuaXiaService {
     private UserMapper userMapper;
     private String message;
     private String macAddress;
-    public int addFace(HostAddRequest addRequest){
+    public int addFace(HuaXiaAddRequest addRequest){
         if(userMapper.getOne(addRequest.getId())!=null){
             return 1501;
         }
@@ -173,7 +173,5 @@ public class HuaXiaService {
         } else
             return "";
     }
-
-
 }
 

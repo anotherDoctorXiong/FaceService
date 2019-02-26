@@ -1,7 +1,7 @@
 package faceservice.controller;
 
 
-import faceservice.model.HostAddRequest;
+import faceservice.model.HuaXiaAddRequest;
 import faceservice.model.Response;
 import faceservice.service.HuaXiaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class HuaXiaController {
     @Autowired
     private HuaXiaService huaXiaService;
     @RequestMapping(value = "/face/add", method = RequestMethod.POST)
-    public ResponseEntity<Response> addFace(@Valid HostAddRequest addRequest, BindingResult bindingResult) throws Exception {
+    public ResponseEntity<Response> addFace(@Valid HuaXiaAddRequest addRequest, BindingResult bindingResult) throws Exception {
         Response res=new Response();
         //对参数进行校验
         if(bindingResult.hasErrors()){
@@ -67,7 +67,7 @@ public class HuaXiaController {
             res.setCode(1);
             return new ResponseEntity(res,HttpStatus.OK);
         }
-        HostAddRequest addRequest=new HostAddRequest();
+        HuaXiaAddRequest addRequest=new HuaXiaAddRequest();
         addRequest.setImage(image);
         if(!isPic(addRequest.getImage())){
             res.setCode(1);

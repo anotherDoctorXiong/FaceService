@@ -12,7 +12,7 @@ import java.io.*;
 
 import static faceservice.tools.Imagehandle.ImageTools.isPic;
 
-public class HostAddRequest {
+public class HuaXiaAddRequest {
     @NotEmpty(message = "id is not allowed to be empty or null")
     private String id;
 
