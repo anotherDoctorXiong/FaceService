@@ -30,25 +30,23 @@ public class EIController {
             res.setMessage(bindingResult.getFieldError().getDefaultMessage());
             return new ResponseEntity(res, HttpStatus.BAD_REQUEST);
         }else{
-            res.setCode(service.addFace(addRequest));
+            int a=service.addFace(addRequest);
+            if (a == 0) {
+                res.setData(service.getData());
+            }
+            res.setCode(a);
             return new ResponseEntity(res,HttpStatus.OK);
         }
     }
     @RequestMapping(value = "/face/delete", method = RequestMethod.POST)
-    public ResponseEntity<Response> deleteFace(@RequestParam String id) {
+    public ResponseEntity<Response> deleteFace(@RequestParam String id)throws IOException {
         Response res=new Response();
         //对参数进行校验
-        int a= 0;
-        try {
-            a = service.faceDelete(id);
-        } catch (IOException e) {
-            e.printStackTrace();
+        int a=service.faceDelete(id);
+        if (a == 0) {
+            res.setData(service.getData());
         }
-        if(a==1) {
-            res.setCode(a);
-            res.setMessage(service.getMessage());
-        }else
-            res.setCode(a);
+        res.setCode(a);
         return new ResponseEntity(res,HttpStatus.OK);
     }
 }

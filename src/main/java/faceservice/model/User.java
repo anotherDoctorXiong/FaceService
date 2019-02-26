@@ -21,7 +21,7 @@ public class User implements Serializable {
     }
     public  User(EIAddRequest addRequest){
         this.id=addRequest.getId();
-        this.name="";
+        this.name=addRequest.getName();
         this.face=getBytes(addRequest.getImage());
     }
 
@@ -73,6 +73,15 @@ public class User implements Serializable {
         map.put("name",this.name);
         map.put("ip",ip);
         map.put("face",this.face);
+        return map;
+    }
+    public Map<String,Object> getEIUserMap(EI ei){
+        Map<String,Object> map=new HashMap();
+        map.put("user_id",this.id.substring(0,8));
+        map.put("name",this.name);
+        map.put("ip",ei.getIp());
+        map.put("device_id",ei.getDevice());
+        map.put("credence_id",this.id);
         return map;
     }
     private static  byte[] getBytes(File file){

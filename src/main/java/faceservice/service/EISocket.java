@@ -181,7 +181,7 @@ public class EISocket {
             System.arraycopy(buildJsonHeader(cmd, dataLen, packageNo), 0, buffer, 0, headerLen);
             System.arraycopy(data, 0, buffer, headerLen, dataLen);
             try {
-                log.info("send data:{}",new String(data));
+
                 synchronized (writeLock) {
                     dataOutputStream.write(buffer);
                 }
@@ -190,7 +190,9 @@ public class EISocket {
                 e.printStackTrace();
             }
         } else {
-            log.info("send data:{}",new String(data));
+            if(data.length<500){
+                log.info("send data:{}",new String(data));
+            }
             try {
                 synchronized (writeLock) {
                     dataOutputStream.write(buildJsonHeader(cmd, dataLen, packageNo));

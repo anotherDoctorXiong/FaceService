@@ -24,6 +24,7 @@ public class EIService {
     private UserMapper userMapper;
     @Autowired
     private EIMapper eiMapper;
+    private List<Map<String,Object>> list;
 
 
     public void setMessage(String message) {
@@ -74,6 +75,7 @@ public class EIService {
             if(getResultCode(mess)==0){
                 userMapper.insert(new User(addRequest));
                 eiMapper.insert(new EI(addRequest));
+                this.setData(addRequest.getId());
                 return 0;
             }else{
                 return getResultCode(mess);
@@ -119,6 +121,7 @@ public class EIService {
             String mess=socket.getData();
             socket.shutdownAndClose();
             if(getResultCode(mess)==0){
+                this.setData(id);
                 userMapper.delete(id);
                 eiMapper.delete(id);
                 return 0;
@@ -129,4 +132,15 @@ public class EIService {
         }
         return 1;
     }
+    public void setData(String id){
+        User user=userMapper.getOne(id);
+        EI ei=eiMapper.getOne(id);
+        List<Map<String,Object>> list=new ArrayList<>();
+        list.add(user.getEIUserMap(ei));
+        this.list=list;
+    }
+    public List<Map<String,Object>> getData(){
+        return list;
+    }
+
 }
