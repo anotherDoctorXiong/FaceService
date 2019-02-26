@@ -29,7 +29,7 @@ public class EIAddRequest {
 
 
 
-
+    @Pattern(regexp = "\\d{0,3}",message = "days is smaller than 999")
     private String days;
 
     public String getDays() {

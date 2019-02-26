@@ -45,7 +45,7 @@ public class EIService {
         EISocket socket=new EISocket(new Socket(ip,18026));
         long time = new Date().getTime();
         int nowTimeStamp =(int)(time / 1000);
-        if(addRequest.getDays()!=null){
+        if(addRequest.getDays()!=null&&!addRequest.getDays().equals("")){
             validtime=86400*Integer.valueOf(addRequest.getDays());
         }
         Map addFace = new HashMap<String, Object>() {{
