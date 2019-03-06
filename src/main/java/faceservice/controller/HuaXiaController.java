@@ -60,10 +60,10 @@ public class HuaXiaController {
         return new ResponseEntity(res,HttpStatus.OK);
     }
     @RequestMapping(value = "/face/updata", method = RequestMethod.POST)
-    public ResponseEntity<Response> updataFace(String id, MultipartFile image)throws IOException{
+    public ResponseEntity<Response> updataFace(String id,String name, MultipartFile image)throws IOException{
         Response res=new Response();
         //对参数进行校验
-        if(id==null||image==null||image.isEmpty()){
+        if(id==null||image==null||image.isEmpty()||name==null||name==""){
             res.setCode(1);
             return new ResponseEntity(res,HttpStatus.OK);
         }
@@ -74,7 +74,7 @@ public class HuaXiaController {
             res.setMessage("image is only allowed jpg/jpeg/png");
             return new ResponseEntity(res,HttpStatus.OK);
         }
-        int a=huaXiaService.updataFace(id,addRequest.getBytes());
+        int a=huaXiaService.updataFace(id,name,addRequest.getBytes());
         if(a==0){
             res.setCode(a);
             res.setMac(huaXiaService.getMacAddress(id));

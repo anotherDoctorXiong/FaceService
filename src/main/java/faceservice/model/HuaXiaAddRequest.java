@@ -13,7 +13,7 @@ import java.io.*;
 import static faceservice.tools.Imagehandle.ImageTools.isPic;
 
 public class HuaXiaAddRequest {
-    @NotEmpty(message = "id is not allowed to be empty or null")
+    @Pattern(regexp = "\\d{10}",message = "id is a number of ten digit")
     private String id;
 
     @Pattern(regexp ="[\\u4e00-\\u9fa5]+",message = "name is only allowed chinese")

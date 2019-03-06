@@ -8,7 +8,7 @@ import java.util.Map;
 public class Response {
     private int code;
     private String message;
-    private long timestamp;
+    private int timestamp;
     private List<Map<String, Object>> data;
     private String mac;
     public final static Map<Integer, String> ErrorMessage = new HashMap<Integer, String>() {
@@ -40,7 +40,7 @@ public class Response {
     public Response() {
         this.code = 0;
         this.message = "";
-        this.timestamp=new Date().getTime();
+        this.timestamp=(int)new Date().getTime()/1000;
     }
 
     public int getCode() {
@@ -60,11 +60,11 @@ public class Response {
         this.message =message;
     }
 
-    public long getTimestamp() {
+    public int getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(long timestamp) {
+    public void setTimestamp(int timestamp) {
         this.timestamp = timestamp;
     }
 

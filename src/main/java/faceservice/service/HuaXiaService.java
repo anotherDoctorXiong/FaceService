@@ -92,7 +92,7 @@ public class HuaXiaService {
         }
 
     }
-    public int updataFace(String id,byte[] image){
+    public int updataFace(String id,String name,byte[] image){
         HuaXia huaXia=huaXiaMapper.getOne(id);
         if(huaXia==null){
             return 1503;
@@ -104,7 +104,7 @@ public class HuaXiaService {
         }};
         ResponseEntity res=httpService.sendUrlencoded(ip+":8080/face/base/update",updataFace);
         if(getResult(res)){
-            User user=new User(id,image);
+            User user=new User(id,name,image);
             userMapper.update(user);
             return 0;
         }else{
