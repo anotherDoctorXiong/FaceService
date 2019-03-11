@@ -59,7 +59,7 @@ public class HuaXiaController {
             res.setCode(a);
         return new ResponseEntity(res,HttpStatus.OK);
     }
-    @RequestMapping(value = "/face/updata", method = RequestMethod.POST)
+    @RequestMapping(value = "/face/update", method = RequestMethod.POST)
     public ResponseEntity<Response> updataFace(String id,String name, MultipartFile image)throws IOException{
         Response res=new Response();
         //对参数进行校验

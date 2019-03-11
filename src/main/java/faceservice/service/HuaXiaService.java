@@ -98,24 +98,36 @@ public class HuaXiaService {
             return 1503;
         }
         String ip=huaXia.getIp();
-        Map updataFace=new HashMap<String,String>(){{
-            put("faceId",id);
-            put("pic",new String(Base64.encodeBase64(image)));
+        Map update = new HashMap<String, String>() {{
+            put("faceId", id);
+            put("username", name);
+            put("valid", "9999");
+            put("wgId", "");
         }};
-        ResponseEntity res=httpService.sendUrlencoded(ip+":8080/face/base/update",updataFace);
-        if(getResult(res)){
-            User user=new User(id,name,image);
-            userMapper.update(user);
-            return 0;
-        }else{
-            setMessage(getMsg(res));
-            if(getMessage().equals("未找到此FaceId的人员信息，请先添加人员！")){
-                userMapper.delete(id);
-                huaXiaMapper.delete(id);
+        Map<String, String> person = new HashMap<String, String>() {{
+            put("person", getJosnString(update));
+        }};
+        ResponseEntity res0=httpService.sendUrlencoded(ip+":8080/person/update",person);
+        if(getResult(res0)){
+            Map updataFace=new HashMap<String,String>(){{
+                put("faceId",id);
+                put("pic",new String(Base64.encodeBase64(image)));
+            }};
+            ResponseEntity res=httpService.sendUrlencoded(ip+":8080/face/base/update",updataFace);
+            if(getResult(res)){
+                User user=new User(id,name,image);
+                userMapper.update(user);
+                return 0;
+            }else{
+                setMessage(getMsg(res));
+                if(getMessage().equals("未找到此FaceId的人员信息，请先添加人员！")){
+                    userMapper.delete(id);
+                    huaXiaMapper.delete(id);
+                }
+                return 1;
             }
-            return 1;
-        }
-
+        }else
+            return 1507;
     }
     public int queryFace(String id){
         HuaXia huaXia=huaXiaMapper.getOne(id);
