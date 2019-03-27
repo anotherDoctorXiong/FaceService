@@ -40,7 +40,7 @@ public class Response {
     public Response() {
         this.code = 0;
         this.message = "";
-        this.timestamp=(int)new Date().getTime()/1000;
+        this.timestamp=(int)(new Date().getTime()/1000);
     }
 
     public int getCode() {
